@@ -3,7 +3,7 @@ extends Node2D
 onready var UnitManager = $UnitManager
 onready var Map = $Map
 
-onready var UnitScene = preload("res://Unit/Unit.tscn")
+onready var UnitScene = preload("res://Unit/units/Bunny/Bunny.tscn")
 
 func _ready() -> void:
 	var unit = UnitScene.instance()

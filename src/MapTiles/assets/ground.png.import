@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ground.png-64996d06e2bde023fc43ca3111d9401e.stex"
+path="res://.import/ground.png-23c7685d728be0ab21080f8c1cab21c5.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://MapGrid/assets/ground.png"
-dest_files=[ "res://.import/ground.png-64996d06e2bde023fc43ca3111d9401e.stex" ]
+source_file="res://MapTiles/assets/ground.png"
+dest_files=[ "res://.import/ground.png-23c7685d728be0ab21080f8c1cab21c5.stex" ]
 
 [params]
 
