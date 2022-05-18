@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.10"
+const VERSION = "0.0.11"
 
 const CELL_WIDTH = 16
 const CELL_HEIGHT = 16
