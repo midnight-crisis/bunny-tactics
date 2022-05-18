@@ -18,8 +18,11 @@ func _init():
 
 func _ready():
 	pass
+	
+func set_tile(x, y, tile):
+	tiles[x][y] = tile
 
 func fill(tile:int = Global.Tile.EMPTY):
 	for x in range(tiles_width):
 		for y in range(tiles_height):
-			tiles[x][y] = tile
+			set_tile(x, y, tile)
