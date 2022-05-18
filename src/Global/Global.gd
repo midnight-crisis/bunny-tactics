@@ -8,8 +8,13 @@ const MAP_TILES_WIDTH = 12
 const MAP_TILES_HEIGHT = 8
 const UNIT_VERTICAL_OFFSET = 4
 
+var rng = RandomNumberGenerator.new()
+
 enum Tile {
 	INVALID = -1,
 	EMPTY = 0,
 	GROUND = 1
 }
+
+func _ready() -> void:
+	rng.randomize()

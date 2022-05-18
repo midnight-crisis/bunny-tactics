@@ -4,7 +4,7 @@ onready var Version = $Camera/UI/Version
 onready var UnitManager = $UnitManager
 onready var Map = $Map
 
-onready var UnitScene = preload("res://Unit/Unit.tscn")
+onready var UnitScene = preload("res://Unit/units/Bunny/NormalBunny.tscn")
 
 func _ready() -> void:
 	Version.text = "bunny-tactics v" + Global.VERSION
