@@ -1,15 +1,16 @@
 extends Node2D
 
 onready var Version = $Camera/UI/Version
+onready var ActionMenu = $Camera/UI/ActionMenu
 onready var UnitManager = $UnitManager
 onready var Map = $Map
 
-onready var UnitScene = preload("res://Unit/units/Bunny/NormalBunny.tscn")
-
 func _ready() -> void:
-	Version.text = "bunny-tactics v" + Global.VERSION
+	UnitManager.connect("unit_selected", ActionMenu, "set_unit")
 	
-	var unit = UnitScene.instance()
-	UnitManager.add_child(unit)
-	UnitManager.place_unit(unit, 4, 4)
+	Version.text = "bunny-tactics v" + Global.VERSION
+	UnitManager.add_unit(null, 3, 3)
+	UnitManager.add_unit(null, 2, 5)
+	UnitManager.add_unit(null, 7, 1)
+	UnitManager.add_unit(null, 9, 7)
 	pass
