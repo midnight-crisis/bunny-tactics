@@ -12,6 +12,7 @@ var speed = 1
 
 onready var Name = $Name
 onready var UnitSprite = $Sprite
+onready var Tweener = $Tweener
 
 func _ready() -> void:
 	Name.text = fullname

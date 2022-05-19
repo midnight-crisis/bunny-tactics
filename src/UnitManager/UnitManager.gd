@@ -19,7 +19,10 @@ func place_unit(unit: Unit, x, y):
 	if (unit):
 		var x_pos = floor((x + 0.5) * Global.CELL_WIDTH)
 		var y_pos = floor((y + 1) * Global.CELL_HEIGHT) - Global.UNIT_VERTICAL_OFFSET
-		unit.set_position(Vector2(x_pos, y_pos))
+		
+		unit.Tweener.interpolate_property(unit, "position", unit.position, Vector2(x_pos, y_pos), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
+		unit.Tweener.start()
+		# unit.set_position(Vector2(x_pos, y_pos))
 
 func _on_unit_selected(unit):
 	current_unit = unit
