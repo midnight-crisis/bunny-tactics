@@ -25,5 +25,10 @@ func place_unit(unit: Unit, x, y):
 		# unit.set_position(Vector2(x_pos, y_pos))
 
 func _on_unit_selected(unit):
+	if (current_unit):
+		current_unit.Arrow.visible = false
+	
+	unit.Arrow.visible = true
 	current_unit = unit
+	
 	emit_signal("unit_selected", unit)
