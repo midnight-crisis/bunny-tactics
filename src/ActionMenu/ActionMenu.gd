@@ -22,5 +22,19 @@ func set_info():
 		Title.text = unit.fullname + ", " + unit.job + " " + unit.species 
 		Health.text = "HP: " + String(unit.health) + "/" + String(unit.max_health)
 
+
+func _on_AttackButton_pressed() -> void:
+	emit_signal("action_selected", Global.ActionType.ATTACK)
+	print("Attacking")
+
 func _on_MoveButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.MOVE)
+	print("Moving")
+
+func _on_WaitButton_pressed() -> void:
+	emit_signal("action_selected", Global.ActionType.WAIT)
+	print("Waiting")
+
+func _on_SpecialButton_pressed() -> void:
+	emit_signal("action_selected", Global.ActionType.SPECIAL_NONE)
+	print("Using Special")

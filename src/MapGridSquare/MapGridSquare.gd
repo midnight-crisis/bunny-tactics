@@ -11,10 +11,8 @@ func _on_InteractionArea_input_event(viewport: Node, event: InputEvent, shape_id
 	if (event is InputEventMouseButton && event.pressed):
 		emit_signal("square_clicked", for_tile)
 
-
 func _on_InteractionArea_mouse_entered() -> void:
 	Square.visible = true
-
 
 func _on_InteractionArea_mouse_exited() -> void:
 	Square.visible = false

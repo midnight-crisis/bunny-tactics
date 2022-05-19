@@ -5,11 +5,9 @@ onready var ActionMenu = $Camera/UI/ActionMenu
 onready var UnitManager = $UnitManager
 onready var Map = $Map
 
-var current_action = Global.ActionType.NONE
-
 func _ready() -> void:
 	UnitManager.connect("unit_selected", ActionMenu, "set_unit")
-	ActionMenu.connect("action_selected", self, "_on_action_selected")
+	ActionMenu.connect("action_selected", UnitManager, "_on_action_selected")
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
 	
 	Version.text = "bunny-tactics v" + Global.VERSION
@@ -20,9 +18,15 @@ func _ready() -> void:
 	pass
 
 func _on_active_tile_change(pos):
-	if (current_action == Global.ActionType.MOVE):
+	if (UnitManager.current_action == Global.ActionType.MOVE):
 		UnitManager.place_unit(UnitManager.current_unit, pos.x, pos.y)
-		current_action = Global.ActionType.NONE
+		UnitManager.current_action = Global.ActionType.NONE
+		
+	elif (UnitManager.current_action == Global.ActionType.ATTACK):
+		var target_unit = UnitManager.find_unit_on_tile(pos)
+		if (target_unit):
+			target_unit.health -= UnitManager.current_unit.attack
+		UnitManager.current_action = Global.ActionType.NONE
+		
+	ActionMenu.set_info()
 
-func _on_action_selected(action):
-	current_action = action

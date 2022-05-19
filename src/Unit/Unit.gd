@@ -6,9 +6,12 @@ signal unit_clicked
 var fullname = "Unnamed"
 var species = "Human"
 var job = "Dummy"
+
+var tile_position = Vector2(-1, -1)
 var health = 15
 var max_health = 30
-var speed = 1
+var attack = 1
+
 
 onready var Name = $Name
 onready var UnitSprite = $Sprite
@@ -17,7 +20,6 @@ onready var Tweener = $Tweener
 
 func _ready() -> void:
 	Name.text = fullname
-
 
 func _on_InteractArea_mouse_entered() -> void:
 	Name.visible = true
