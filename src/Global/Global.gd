@@ -1,7 +1,10 @@
 extends Node
 
-const VERSION = "0.0.14"
+const VERSION = "0.0.15"
 
+const WINDOW_WIDTH = 320
+const WINDOW_HEIGHT = 180
+const CAMERA_Y_OFFSET = 48
 const CELL_WIDTH = 16
 const CELL_HEIGHT = 16
 const MAP_TILES_WIDTH = 12

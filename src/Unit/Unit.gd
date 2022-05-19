@@ -17,6 +17,7 @@ onready var Name = $Name
 onready var UnitSprite = $Sprite
 onready var Arrow = $Arrow
 onready var Tweener = $Tweener
+onready var UnitCamera = $Camera
 
 func _ready() -> void:
 	Name.text = fullname
