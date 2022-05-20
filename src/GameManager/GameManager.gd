@@ -59,6 +59,11 @@ func _on_active_tile_change(pos):
 		if (UnitManager.get_unit(pos.x, pos.y) == null):
 			if (UnitManager.reachable_tiles.has(pos)):
 				Map.set_tile(pos.x, pos.y, Global.Tile.EMPTY)
+	
+	if (UnitManager.current_action == Global.ActionType.FLOOD):
+		if (UnitManager.get_unit(pos.x, pos.y) == null):
+			if (UnitManager.reachable_tiles.has(pos)):
+				Map.set_tile(pos.x, pos.y, Global.Tile.WATER)
 				
 	UnitManager.current_action = Global.ActionType.NONE
 	UnitManager.reset_action()	
