@@ -19,13 +19,13 @@ func _ready() -> void:
 	pass
 	
 func show():
-	Tweener.interpolate_property(self, "rect_position", Vector2(0,48), Vector2(0,0), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
+	Tweener.interpolate_property(self, "rect_position", Vector2(0,32), Vector2(0,0), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
 	Tweener.start()
 	print("showing action bar")
 	
 func hide():
 	unit = null
-	Tweener.interpolate_property(self, "rect_position", rect_position, Vector2(0,48), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
+	Tweener.interpolate_property(self, "rect_position", rect_position, Vector2(0,32), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
 	Tweener.start()
 	print("HIDING action bar")
 	

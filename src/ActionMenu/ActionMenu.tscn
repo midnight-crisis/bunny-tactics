@@ -24,7 +24,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 margin_left = -160.0
-margin_top = -48.0
+margin_top = -32.0
 margin_right = 160.0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
@@ -32,56 +32,60 @@ anchor_top = 0.733
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
-margin_top = 8.06
+margin_top = 20.0
 margin_right = -8.0
-margin_bottom = -8.0
+margin_bottom = -4.0
 mouse_default_cursor_shape = 2
 
 [node name="ActionElements" type="HBoxContainer" parent="MarginContainer"]
 margin_right = 304.0
-margin_bottom = 32.0
+margin_bottom = 24.0
 rect_pivot_offset = Vector2( 374, -82 )
 
 [node name="Info" type="VBoxContainer" parent="MarginContainer/ActionElements"]
-margin_bottom = 32.0
+margin_bottom = 24.0
+alignment = 1
 
 [node name="Title" type="Label" parent="MarginContainer/ActionElements/Info"]
 self_modulate = Color( 0, 0, 0, 1 )
-margin_bottom = 13.0
+margin_top = 4.0
+margin_bottom = 10.0
 rect_pivot_offset = Vector2( 78, 7 )
 theme = ExtResource( 5 )
 
 [node name="Health" type="Label" parent="MarginContainer/ActionElements/Info"]
 self_modulate = Color( 0, 0, 0, 1 )
-margin_top = 17.0
-margin_bottom = 30.0
+margin_top = 14.0
+margin_bottom = 20.0
 rect_pivot_offset = Vector2( 78, 7 )
 theme = ExtResource( 5 )
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/ActionElements"]
 margin_left = 4.0
 margin_right = 240.0
-margin_bottom = 32.0
+margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_styles/separator = SubResource( 1 )
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ActionElements"]
 margin_left = 244.0
 margin_right = 304.0
-margin_bottom = 32.0
+margin_bottom = 24.0
+alignment = 1
 
 [node name="ActionsLabel" type="Label" parent="MarginContainer/ActionElements/VBoxContainer2"]
+visible = false
 self_modulate = Color( 0, 0, 0, 1 )
 margin_right = 60.0
-margin_bottom = 13.0
+margin_bottom = 9.0
 rect_pivot_offset = Vector2( 78, 7 )
 theme = ExtResource( 5 )
 text = "Actions"
 
 [node name="Actions" type="HBoxContainer" parent="MarginContainer/ActionElements/VBoxContainer2"]
-margin_top = 17.0
+margin_top = 6.0
 margin_right = 60.0
-margin_bottom = 29.0
+margin_bottom = 18.0
 
 [node name="AttackButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
 margin_right = 12.0
