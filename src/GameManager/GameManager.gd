@@ -22,9 +22,10 @@ func _ready() -> void:
 
 func _on_active_tile_change(pos):
 	if (UnitManager.current_action == Global.ActionType.MOVE):
-		UnitManager.place_unit(UnitManager.current_unit, pos.x, pos.y)
-		UnitManager.current_action = Global.ActionType.NONE
-		GameCamera.focus_on_tile(pos)
+		if (UnitManager.get_unit(pos.x, pos.y) == null):
+			UnitManager.place_unit(UnitManager.current_unit, pos.x, pos.y)
+			UnitManager.current_action = Global.ActionType.NONE
+			GameCamera.focus_on_tile(pos)
 		
 	elif (UnitManager.current_action == Global.ActionType.ATTACK):
 		var target_unit = UnitManager.find_unit_on_tile(pos)

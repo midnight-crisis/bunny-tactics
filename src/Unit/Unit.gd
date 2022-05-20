@@ -12,7 +12,6 @@ var health = 15
 var max_health = 30
 var attack = 1
 
-
 onready var Name = $Name
 onready var UnitSprite = $Sprite
 onready var Arrow = $Arrow
