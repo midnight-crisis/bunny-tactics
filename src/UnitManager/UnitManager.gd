@@ -122,6 +122,8 @@ func _on_action_selected(action):
 		reachable_tiles = calculate_reachable_tiles(current_unit.tile_position, current_unit.move_reach)
 	elif (current_action == Global.ActionType.ATTACK):
 		reachable_tiles = calculate_reachable_tiles(current_unit.tile_position, current_unit.attack_reach)
+	elif (current_action == Global.ActionType.HEAL):
+		reachable_tiles = calculate_reachable_tiles(current_unit.tile_position, current_unit.special_reach)
 	else:
 		reachable_tiles = []
 		

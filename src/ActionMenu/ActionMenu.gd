@@ -9,7 +9,6 @@ onready var MoveButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/
 
 var unit = null
 
-
 func _ready() -> void:
 	pass
 	
@@ -19,7 +18,7 @@ func set_unit(unit_):
 
 func set_info():
 	if (unit):
-		Title.text = unit.fullname + ", " + unit.job + " " + unit.species 
+		Title.text = unit.fullname + " the " + unit.job + " " + unit.species 
 		Health.text = "HP: " + String(unit.health) + "/" + String(unit.max_health)
 
 
@@ -36,5 +35,5 @@ func _on_WaitButton_pressed() -> void:
 	print("Waiting")
 
 func _on_SpecialButton_pressed() -> void:
-	emit_signal("action_selected", Global.ActionType.SPECIAL_NONE)
+	emit_signal("action_selected", unit.special_action)
 	print("Using Special")

@@ -32,6 +32,7 @@ func spawn_damage_particle(pos: Vector2, n):
 	damage_particle.set_number(n)
 
 func _on_active_tile_change(pos):
+	
 	if (UnitManager.current_action == Global.ActionType.MOVE):
 		if (UnitManager.get_unit(pos.x, pos.y) == null):
 			if (UnitManager.reachable_tiles.has(pos)):
@@ -49,6 +50,15 @@ func _on_active_tile_change(pos):
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
 				UnitManager.reset_action()
 	
+	elif (UnitManager.current_action == Global.ActionType.HEAL):
+		var target_unit = UnitManager.units[pos.x][pos.y]
+		if (target_unit):
+			if (UnitManager.reachable_tiles.has(pos)):
+				var heal = UnitManager.current_unit.attack * 2
+				target_unit.health = min(target_unit.health + heal, target_unit.max_health) 
+				UnitManager.current_action = Global.ActionType.NONE
+				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+				UnitManager.reset_action()
 		
 	ActionMenu.set_info()
 

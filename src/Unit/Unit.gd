@@ -7,6 +7,8 @@ var fullname = "Unnamed"
 var species = "Human"
 var job = "Dummy"
 
+var special_action = Global.ActionType.SPECIAL_NONE
+
 var tile_position = Vector2(-1, -1)
 var health = 15
 var max_health = 30
