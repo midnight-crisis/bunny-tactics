@@ -19,10 +19,11 @@ func _ready() -> void:
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
 
 	Map.fill(Global.Tile.GROUND)
-	UnitManager.add_unit(null, 3, 3)
-	UnitManager.add_unit(null, 2, 5)
-	UnitManager.add_unit(null, 7, 1)
-	UnitManager.add_unit(null, 9, 7)
+	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 3, 3)
+	UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 2, 5)
+	UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 7, 1)
+	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 9, 7)
+	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 9, 2)
 
 func spawn_damage_particle(pos: Vector2, n):
 	var damage_particle = DamageParticle.instance()

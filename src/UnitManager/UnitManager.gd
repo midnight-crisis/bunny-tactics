@@ -4,6 +4,11 @@ signal unit_selected
 signal reachable_tiles_changed
 
 onready var NormalBunny = preload("res://Unit/units/Bunny/NormalBunny.tscn")
+onready var BuilderBunny = preload("res://Unit/units/Bunny/BuilderBunny.tscn")
+onready var DiggerBunny = preload("res://Unit/units/Bunny/DiggerBunny.tscn")
+onready var FlooderBunny = preload("res://Unit/units/Bunny/FlooderBunny.tscn")
+onready var HealerBunny = preload("res://Unit/units/Bunny/HealerBunny.tscn")
+
 
 var units = []
 var current_unit = null
@@ -20,7 +25,23 @@ func _ready() -> void:
 	pass
 	
 func add_unit(unit_type, x = 0, y = 0):
-	var new_unit = NormalBunny.instance();
+	
+	var new_unit = null
+	
+	if (unit_type == Global.UnitType.BUNNY_NORMAL):
+		new_unit = NormalBunny.instance();
+	elif (unit_type == Global.UnitType.BUNNY_BUILDER):
+		new_unit = BuilderBunny.instance();
+	elif (unit_type == Global.UnitType.BUNNY_DIGGER):
+		new_unit = DiggerBunny.instance();
+	elif (unit_type == Global.UnitType.BUNNY_FLOODER):
+		new_unit = FlooderBunny.instance();
+	elif (unit_type == Global.UnitType.BUNNY_HEALER):
+		new_unit = HealerBunny.instance();
+	else:
+		print("Invalid unit type.")
+		return
+	
 	add_child(new_unit)
 	place_unit(new_unit, x, y)
 	new_unit.connect("unit_clicked", self, "_on_unit_selected")

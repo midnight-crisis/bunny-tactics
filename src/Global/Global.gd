@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.21"
+const VERSION = "0.0.22"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -34,6 +34,14 @@ enum ActionType {
 	DIG = 12,
 	FLOOD = 13,
 	HEAL = 14
+}
+
+enum UnitType {
+	BUNNY_NORMAL = 101,
+	BUNNY_BUILDER = 102,
+	BUNNY_DIGGER = 103,
+	BUNNY_FLOODER = 104
+	BUNNY_HEALER = 105
 }
 
 func _ready() -> void:
