@@ -23,7 +23,8 @@ func focus_on(x, y):
 	Tweener.start()
 	
 func focus_on_unit(unit):
-	focus_on(unit.global_position.x, unit.global_position.y)
+	if (unit):
+		focus_on(unit.global_position.x, unit.global_position.y)
 
 func focus_on_tile(tile_position):
 	focus_on(tile_position.x * Global.CELL_WIDTH, tile_position.y * Global.CELL_HEIGHT)

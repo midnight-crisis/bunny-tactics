@@ -5,7 +5,11 @@
 [ext_resource path="res://Unit/assets/Bunny/digger-bunny.png" type="Texture" id=3]
 
 [node name="Unit" instance=ExtResource( 1 )]
+z_index = 0
 script = ExtResource( 2 )
 
 [node name="Sprite" parent="." index="2"]
 texture = ExtResource( 3 )
+
+[node name="InteractArea" parent="." index="4"]
+z_index = 1

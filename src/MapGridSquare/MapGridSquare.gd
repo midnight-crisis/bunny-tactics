@@ -9,7 +9,7 @@ onready var InteractionArea = $InteractionArea
 var for_tile = Vector2(-1, -1)
 
 func _on_InteractionArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if (event is InputEventMouseButton && event.pressed):
+	if (event is InputEventMouseButton && event.pressed && Input.is_action_pressed("click")):
 		emit_signal("square_clicked", for_tile)
 		
 func highlight():

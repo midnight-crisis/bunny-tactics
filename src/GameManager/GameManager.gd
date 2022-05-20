@@ -55,17 +55,23 @@ func _on_active_tile_change(pos):
 				target_unit.health = min(target_unit.health + heal, target_unit.max_health) 
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
 				
-	if (UnitManager.current_action == Global.ActionType.DIG):
+	elif (UnitManager.current_action == Global.ActionType.DIG):
 		if (UnitManager.get_unit(pos.x, pos.y) == null):
 			if (UnitManager.reachable_tiles.has(pos)):
 				Map.set_tile(pos.x, pos.y, Global.Tile.EMPTY)
 	
-	if (UnitManager.current_action == Global.ActionType.FLOOD):
+	elif (UnitManager.current_action == Global.ActionType.FLOOD):
 		if (UnitManager.get_unit(pos.x, pos.y) == null):
 			if (UnitManager.reachable_tiles.has(pos)):
 				Map.set_tile(pos.x, pos.y, Global.Tile.WATER)
-				
+		
 	UnitManager.current_action = Global.ActionType.NONE
 	UnitManager.reset_action()	
 	ActionMenu.set_info()
+	
+	if (UnitManager.units[pos.x][pos.y] == null):
+		print("hidde")
+		UnitManager.reset_selection()
+		ActionMenu.hide()
+	
 

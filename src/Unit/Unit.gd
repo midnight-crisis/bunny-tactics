@@ -34,5 +34,5 @@ func _on_InteractArea_mouse_exited() -> void:
 	Name.visible = false
 
 func _on_InteractArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if (event is InputEventMouseButton && event.pressed):
+	if (event is InputEventMouseButton && event.pressed && Input.is_action_pressed("click")):
 		emit_signal("unit_clicked", self)

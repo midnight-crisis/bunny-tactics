@@ -12,6 +12,8 @@
 [node name="ActionMenu" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = 48.0
+margin_bottom = 48.0
 mouse_filter = 2
 mouse_default_cursor_shape = 5
 script = ExtResource( 6 )
@@ -103,6 +105,8 @@ margin_left = 48.0
 margin_right = 60.0
 margin_bottom = 12.0
 texture_normal = ExtResource( 3 )
+
+[node name="Tweener" type="Tween" parent="."]
 
 [connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton" to="." method="_on_AttackButton_pressed"]
 [connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton" to="." method="_on_MoveButton_pressed"]
