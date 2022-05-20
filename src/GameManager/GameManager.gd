@@ -1,5 +1,7 @@
 extends Node2D
 
+onready var DamageParticle = preload("res://DamageParticle/DamageParticle.tscn")
+
 onready var Version = $Camera/UI/Version
 onready var ActionMenu = $Camera/UI/ActionMenu
 onready var GameCamera = $Camera
@@ -22,6 +24,12 @@ func _ready() -> void:
 	UnitManager.add_unit(null, 7, 1)
 	UnitManager.add_unit(null, 9, 7)
 
+func spawn_damage_particle(pos: Vector2, n):
+	var damage_particle = DamageParticle.instance()
+	add_child(damage_particle)
+	damage_particle.position = pos
+	damage_particle.set_number(n)
+
 func _on_active_tile_change(pos):
 	if (UnitManager.current_action == Global.ActionType.MOVE):
 		if (UnitManager.get_unit(pos.x, pos.y) == null):
@@ -34,9 +42,11 @@ func _on_active_tile_change(pos):
 	elif (UnitManager.current_action == Global.ActionType.ATTACK):
 		var target_unit = UnitManager.units[pos.x][pos.y]
 		if (target_unit):
-			target_unit.health -= UnitManager.current_unit.attack
-			UnitManager.current_action = Global.ActionType.NONE
-			UnitManager.reset_action()
+			if (UnitManager.reachable_tiles.has(pos)):
+				target_unit.health -= UnitManager.current_unit.attack
+				UnitManager.current_action = Global.ActionType.NONE
+				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
+				UnitManager.reset_action()
 	
 		
 	ActionMenu.set_info()

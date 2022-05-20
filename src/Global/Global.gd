@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.18"
+const VERSION = "0.0.20"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -10,6 +10,7 @@ const CELL_HEIGHT = 16
 const MAP_TILES_WIDTH = 12
 const MAP_TILES_HEIGHT = 8
 const UNIT_VERTICAL_OFFSET = 4
+const DAMAGE_PARTICLE_Y_OFFSET = -20
 
 var rng = RandomNumberGenerator.new()
 
