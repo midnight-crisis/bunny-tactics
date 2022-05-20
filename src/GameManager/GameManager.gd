@@ -38,8 +38,6 @@ func _on_active_tile_change(pos):
 			if (UnitManager.reachable_tiles.has(pos)):
 				UnitManager.place_unit(UnitManager.current_unit, pos.x, pos.y)
 				GameCamera.focus_on_tile(pos)
-				UnitManager.current_action = Global.ActionType.NONE
-				UnitManager.reset_action()
 		
 	elif (UnitManager.current_action == Global.ActionType.ATTACK):
 		var target_unit = UnitManager.units[pos.x][pos.y]
@@ -48,7 +46,6 @@ func _on_active_tile_change(pos):
 				target_unit.health -= UnitManager.current_unit.attack
 				UnitManager.current_action = Global.ActionType.NONE
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
-				UnitManager.reset_action()
 	
 	elif (UnitManager.current_action == Global.ActionType.HEAL):
 		var target_unit = UnitManager.units[pos.x][pos.y]
@@ -56,9 +53,14 @@ func _on_active_tile_change(pos):
 			if (UnitManager.reachable_tiles.has(pos)):
 				var heal = UnitManager.current_unit.attack * 2
 				target_unit.health = min(target_unit.health + heal, target_unit.max_health) 
-				UnitManager.current_action = Global.ActionType.NONE
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
-				UnitManager.reset_action()
-		
+				
+	if (UnitManager.current_action == Global.ActionType.DIG):
+		if (UnitManager.get_unit(pos.x, pos.y) == null):
+			if (UnitManager.reachable_tiles.has(pos)):
+				Map.set_tile(pos.x, pos.y, Global.Tile.EMPTY)
+				
+	UnitManager.current_action = Global.ActionType.NONE
+	UnitManager.reset_action()	
 	ActionMenu.set_info()
 
