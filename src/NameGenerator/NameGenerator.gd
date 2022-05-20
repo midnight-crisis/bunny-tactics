@@ -38,7 +38,30 @@ var BadNames = [
 	"Swoobo",
 	"Ranglo",
 	"Spoompy",
-	"Greg"
+	"Greg",
+	"Scammywag",
+	"Crinkler",
+	"Braelynn",
+	"Kaylynn",
+	"Ayedyen",
+	"Haeidyenn",
+	"Jaeiylen",
+	"Shewent",
+	"Marvin",
+	"Sr. Bum",
+	"Bubby Jr.",
+	"Ms. Ginny",
+	"Mr. Mambo",
+	"Graonkle",
+	"Uncle Jun",
+	"Auntie Jan",
+	"Michaelt",
+	"Kangawrong",
+	"Ebeneezy",
+	"Cant-ye",
+	"Jim Jam",
+	"Ding Dong",
+	"Jisjas"
 ]
 
 func generate_good_name():

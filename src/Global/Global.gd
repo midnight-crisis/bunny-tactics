@@ -1,13 +1,13 @@
 extends Node
 
-const VERSION = "0.0.30"
+const VERSION = "0.0.32"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
 const CAMERA_Y_OFFSET = 48
 const CELL_WIDTH = 16
 const CELL_HEIGHT = 16
-const MAP_TILES_WIDTH = 12
+const MAP_TILES_WIDTH = 24
 const MAP_TILES_HEIGHT = 8
 const UNIT_VERTICAL_OFFSET = 4
 const DAMAGE_PARTICLE_Y_OFFSET = -20
@@ -41,7 +41,25 @@ enum UnitType {
 	BUNNY_BUILDER = 102,
 	BUNNY_DIGGER = 103,
 	BUNNY_FLOODER = 104
-	BUNNY_HEALER = 105
+	BUNNY_HEALER = 105,
+	ENEMY_SQUIRREL = 1101,
+	ENEMY_BEE = 1201,
+	ENEMY_BUTTERFLY = 1301,
+	ENEMY_MOLE = 1401,
+	ENEMY_SNAKE = 1501
+}
+
+var UnitScene = {
+	UnitType.BUNNY_NORMAL:  preload("res://Unit/units/Bunny/NormalBunny.tscn"),
+	UnitType.BUNNY_BUILDER:  preload("res://Unit/units/Bunny/BuilderBunny.tscn"),
+	UnitType.BUNNY_DIGGER:  preload("res://Unit/units/Bunny/DiggerBunny.tscn"),
+	UnitType.BUNNY_FLOODER:  preload("res://Unit/units/Bunny/FlooderBunny.tscn"),
+	UnitType.BUNNY_HEALER:  preload("res://Unit/units/Bunny/HealerBunny.tscn"),
+	UnitType.ENEMY_SQUIRREL:  preload("res://Unit/units/Enemy/Squirrel.tscn"),
+	UnitType.ENEMY_BEE:  preload("res://Unit/units/Enemy/Bee.tscn"),
+	UnitType.ENEMY_BUTTERFLY:  preload("res://Unit/units/Enemy/Butterfly.tscn"),
+	UnitType.ENEMY_MOLE:  preload("res://Unit/units/Enemy/Mole.tscn"),
+	UnitType.ENEMY_SNAKE:  preload("res://Unit/units/Enemy/Snake.tscn")
 }
 
 func _ready() -> void:

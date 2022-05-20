@@ -24,6 +24,11 @@ func _ready() -> void:
 	UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 7, 1)
 	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 9, 7)
 	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 9, 2)
+	UnitManager.add_unit(Global.UnitType.ENEMY_SQUIRREL, 13, 3)
+	UnitManager.add_unit(Global.UnitType.ENEMY_BEE, 12, 5)
+	UnitManager.add_unit(Global.UnitType.ENEMY_BUTTERFLY, 17, 1)
+	UnitManager.add_unit(Global.UnitType.ENEMY_MOLE, 19, 7)
+	UnitManager.add_unit(Global.UnitType.ENEMY_SNAKE, 19, 2)
 
 func spawn_damage_particle(pos: Vector2, n):
 	var damage_particle = DamageParticle.instance()
