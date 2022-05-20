@@ -2,5 +2,5 @@
 
 [ext_resource path="res://UnitManager/UnitManager.gd" type="Script" id=1]
 
-[node name="UnitManager" type="Node2D"]
+[node name="UnitManager" type="YSort"]
 script = ExtResource( 1 )
