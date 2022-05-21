@@ -14,6 +14,8 @@ onready var AttackButton = $MarginContainer/ActionElements/VBoxContainer2/Action
 onready var MoveButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton
 onready var WaitButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton
 onready var SpecialButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton
+onready var ActionsContainer = $MarginContainer/ActionElements/VBoxContainer2
+onready var Actions = $MarginContainer/ActionElements/VBoxContainer2/Actions
 onready var Tweener = $Tweener
 
 var unit = null
@@ -36,12 +38,18 @@ func set_unit(unit_):
 	unit = unit_
 	set_info()
 	set_special_button()
+	set_button_disables()
 
 func set_info():
 	if (unit):
 		show()
 		Title.text = unit.fullname + " the " + unit.job + " " + unit.species 
 		Health.text = "HP: " + String(unit.health) + "/" + String(unit.max_health)
+		
+		if (unit.player_controllable):
+			ActionsContainer.visible = true
+		else:
+			ActionsContainer.visible = false
 		
 func set_special_button():
 	
@@ -58,8 +66,21 @@ func set_special_button():
 		else:
 			SpecialButton.visible = false
 	else:
-		
 		return
+		
+func set_button_disables():
+	MoveButton.disabled = false
+	AttackButton.disabled = false
+	MoveButton.disabled = false
+	SpecialButton.disabled = false
+	
+	if (unit):
+		if (unit.has_moved):
+			MoveButton.disabled = true
+		if (unit.has_acted):
+			AttackButton.disabled = true
+			MoveButton.disabled = true
+			SpecialButton.disabled = true
 		
 func _on_move_taken():
 	MoveButton.disabled = true
@@ -68,6 +89,18 @@ func _on_action_taken():
 	AttackButton.disabled = true
 	MoveButton.disabled = true
 	SpecialButton.disabled = true
+	
+func _on_turn_end():
+	MoveButton.disabled = false
+	AttackButton.disabled = false
+	MoveButton.disabled = false
+	SpecialButton.disabled = false
+	
+func hide_actions():
+	Actions.visible = false
+	
+func show_actions():
+	Actions.visible = true
 
 func _on_AttackButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.ATTACK)

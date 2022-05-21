@@ -11,7 +11,6 @@ onready var DiggerBunny = preload("res://Unit/units/Bunny/DiggerBunny.tscn")
 onready var FlooderBunny = preload("res://Unit/units/Bunny/FlooderBunny.tscn")
 onready var HealerBunny = preload("res://Unit/units/Bunny/HealerBunny.tscn")
 
-
 var units = []
 var current_unit = null
 var current_action = Global.ActionType.NONE
@@ -103,8 +102,9 @@ func flag_action():
 	emit_signal("action_taken")
 	
 func reset_flags():
-	current_unit.has_moved = false
-	current_unit.has_acted = false
+	if (current_unit):
+		current_unit.has_moved = false
+		current_unit.has_acted = false
 
 func _on_unit_selected(unit):
 	if (current_action != Global.ActionType.NONE): 
@@ -137,3 +137,5 @@ func _on_action_selected(action):
 	emit_signal("reachable_tiles_changed", reachable_tiles)
 
 
+func _on_turn_end():
+	reset_flags()

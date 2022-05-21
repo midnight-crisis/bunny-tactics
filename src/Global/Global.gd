@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.35"
+const VERSION = "0.0.37"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -18,6 +18,12 @@ enum Team {
 	NONE = 0,
 	PLAYER = 1,
 	ENEMY = 101
+}
+
+var TeamName = {
+	Team.NONE: "No Valid Team",
+	Team.PLAYER: "Bunny Force",
+	Team.ENEMY: "Garden Foes"
 }
 
 # Ground Altas isn't randomized, Godot Bug

@@ -4,12 +4,13 @@ onready var DamageParticle = preload("res://DamageParticle/DamageParticle.tscn")
 
 onready var Version = $Camera/UI/Version
 onready var ActionMenu = $Camera/UI/ActionMenu
+onready var InfoMenu = $Camera/UI/InfoMenu
 onready var GameCamera = $Camera
 onready var UnitManager = $UnitManager
 onready var Map = $Map
 onready var MapGrid = $Map/MapGrid
 
-var turn = Global.Team.NONE
+var turn = Global.Team.PLAYER
 
 func _ready() -> void:
 	Version.text = "bunny-tactics v" + Global.VERSION
@@ -20,6 +21,9 @@ func _ready() -> void:
 	UnitManager.connect("move_taken", ActionMenu, "_on_move_taken")
 	UnitManager.connect("action_taken", ActionMenu, "_on_action_taken")
 	ActionMenu.connect("action_selected", UnitManager, "_on_action_selected")
+	InfoMenu.connect("turn_end", UnitManager, "_on_turn_end")
+	InfoMenu.connect("turn_end", ActionMenu, "_on_turn_end")
+	InfoMenu.connect("turn_end", self, "_on_turn_end")
 	
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
 
@@ -34,6 +38,8 @@ func _ready() -> void:
 	UnitManager.add_unit(Global.UnitType.ENEMY_BUTTERFLY, 17, 1)
 	UnitManager.add_unit(Global.UnitType.ENEMY_MOLE, 19, 7)
 	UnitManager.add_unit(Global.UnitType.ENEMY_SNAKE, 19, 2)
+	
+	turn = Global.Team.PLAYER
 
 func spawn_damage_particle(pos: Vector2, n):
 	var damage_particle = DamageParticle.instance()
@@ -68,20 +74,20 @@ func _on_active_tile_change(pos):
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
 				
-	elif (UnitManager.current_action == Global.ActionType.DIG):
-		if (UnitManager.get_unit(pos.x, pos.y) == null):
+	elif (UnitManager.current_action == Global.ActionType.DIG && (Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND)):
+		if (UnitManager.get_unit(pos.x, pos.y) == null && Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				Map.set_tile(pos.x, pos.y, Global.Tile.EMPTY)
 				UnitManager.flag_action()
 	
 	elif (UnitManager.current_action == Global.ActionType.FLOOD):
-		if (UnitManager.get_unit(pos.x, pos.y) == null):
+		if (UnitManager.get_unit(pos.x, pos.y) == null && (Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND || Map.get_tile(pos.x, pos.y) == Global.Tile.EMPTY)):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				Map.set_tile(pos.x, pos.y, Global.Tile.WATER)
 				UnitManager.flag_action()
 		
 	UnitManager.current_action = Global.ActionType.NONE
-	UnitManager.reset_action()	
+	UnitManager.reset_action()
 	ActionMenu.set_info()
 	
 	if (UnitManager.units[pos.x][pos.y] == null):
@@ -89,4 +95,11 @@ func _on_active_tile_change(pos):
 		UnitManager.reset_selection()
 		ActionMenu.hide()
 	
+func _on_turn_end():
+	if (turn == Global.Team.PLAYER):
+		turn = Global.Team.ENEMY
+		ActionMenu.hide_actions() 
+	elif (Global.Team.ENEMY):
+		turn = Global.Team.PLAYER
+		ActionMenu.show_actions()
 

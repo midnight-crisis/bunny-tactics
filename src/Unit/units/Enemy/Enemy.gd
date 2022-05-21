@@ -6,3 +6,4 @@ func _init() -> void:
 	fullname = NameGenerator.generate_bad_name()
 	species = "Enemy"
 	job = "Template"
+	team = Global.Team.ENEMY

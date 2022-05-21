@@ -8,6 +8,7 @@ var player_controllable = false
 var fullname = "Unnamed"
 var species = "Human"
 var job = "Dummy"
+var team = Global.Team.NONE
 
 var special_action = Global.ActionType.SPECIAL_NONE
 
