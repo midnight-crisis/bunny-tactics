@@ -37,6 +37,10 @@ func _ready() -> void:
 	Name.text = fullname
 	ArrowAnimPlayer.play("Float")
 	
+func reset_flags():
+	has_moved = false
+	has_acted = false
+	
 func hurt(n):
 	health = clamp(health - n, 0, max_health)
 	HealthBar.set_percentage(float(health) / float(max_health))

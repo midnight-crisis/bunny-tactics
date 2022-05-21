@@ -114,7 +114,7 @@ func _on_move_taken():
 
 func _on_action_taken():
 	AttackButton.disabled = true
-	MoveButton.disabled = true
+	WaitButton.disabled = true
 	SpecialButton.disabled = true
 	
 func _on_turn_end():

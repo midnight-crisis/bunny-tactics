@@ -106,10 +106,16 @@ func _on_active_tile_change(pos):
 		ActionMenu.hide()
 	
 func _on_turn_end():
+	
+	for u in UnitManager.get_children():
+		if (u.team == turn):
+			u.reset_flags()
+	
 	if (turn == Global.Team.PLAYER):
 		turn = Global.Team.ENEMY
 		ActionMenu.hide_actions() 
 	elif (Global.Team.ENEMY):
 		turn = Global.Team.PLAYER
 		ActionMenu.show_actions()
+	
 
