@@ -16,6 +16,7 @@ var tile_position = Vector2(-1, -1)
 var health = 15
 var max_health = 30
 var attack = 1
+var passive_heal_amount = 1
 
 var move_reach = 2
 var attack_reach = 1

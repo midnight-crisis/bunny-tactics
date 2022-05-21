@@ -61,15 +61,22 @@ func _on_active_tile_change(pos):
 		if (target_unit):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				target_unit.health -= UnitManager.current_unit.attack
-				UnitManager.current_action = Global.ActionType.NONE
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
+				
+	elif (UnitManager.current_action == Global.ActionType.WAIT):
+		if (!UnitManager.current_unit.has_acted):
+			var heal = UnitManager.current_unit.passive_heal_amount
+			UnitManager.current_unit.health = min(UnitManager.current_unit.health + heal, UnitManager.current_unit.max_health) 
+			UnitManager.flag_action()
+			spawn_damage_particle(UnitManager.current_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+			
 	
 	elif (UnitManager.current_action == Global.ActionType.HEAL):
 		var target_unit = UnitManager.units[pos.x][pos.y]
 		if (target_unit):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
-				var heal = UnitManager.current_unit.attack * 2
+				var heal = UnitManager.heal_amount
 				target_unit.health = min(target_unit.health + heal, target_unit.max_health) 
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
