@@ -110,11 +110,12 @@ func _on_unit_selected(unit):
 	if (current_action != Global.ActionType.NONE): 
 		print("Can't select, currently using action.")
 		return
-		
-	if (unit):
-		unit.Arrow.visible = true
+	
 	if (current_unit): 
 		current_unit.Arrow.visible = false
+	if (unit):
+		unit.Arrow.visible = true
+	
 		
 	current_unit = unit
 	emit_signal("unit_selected", unit)
