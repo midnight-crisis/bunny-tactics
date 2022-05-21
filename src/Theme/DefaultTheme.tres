@@ -1,14 +1,14 @@
 [gd_resource type="Theme" load_steps=10 format=2]
 
 [ext_resource path="res://Font/BodyFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Button/assets/disable.png" type="Texture" id=2]
-[ext_resource path="res://Button/assets/hover.png" type="Texture" id=3]
-[ext_resource path="res://Button/assets/default.png" type="Texture" id=4]
-[ext_resource path="res://Button/assets/pressed.png" type="Texture" id=5]
+[ext_resource path="res://Button/assets/end-turn-disable.png" type="Texture" id=2]
+[ext_resource path="res://Button/assets/end-turn-hover.png" type="Texture" id=3]
+[ext_resource path="res://Button/assets/end-turn-default.png" type="Texture" id=4]
+[ext_resource path="res://Button/assets/end-turn-press.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 2 )
-region_rect = Rect2( 0, 0, 40, 10 )
+region_rect = Rect2( 0, 0, 42, 12 )
 margin_left = 4.0
 margin_right = 4.0
 margin_top = 4.0
@@ -16,7 +16,7 @@ margin_bottom = 7.0
 
 [sub_resource type="StyleBoxTexture" id=2]
 texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 40, 10 )
+region_rect = Rect2( 0, 0, 42, 12 )
 margin_left = 4.0
 margin_right = 4.0
 margin_top = 4.0
@@ -24,7 +24,7 @@ margin_bottom = 7.0
 
 [sub_resource type="StyleBoxTexture" id=3]
 texture = ExtResource( 4 )
-region_rect = Rect2( 0, 0, 40, 10 )
+region_rect = Rect2( 0, 0, 42, 12 )
 margin_left = 4.0
 margin_right = 4.0
 margin_top = 4.0
@@ -32,7 +32,7 @@ margin_bottom = 7.0
 
 [sub_resource type="StyleBoxTexture" id=4]
 texture = ExtResource( 5 )
-region_rect = Rect2( 0, 0, 40, 10 )
+region_rect = Rect2( 0, 0, 42, 12 )
 margin_left = 4.0
 margin_right = 4.0
 margin_top = 4.0

@@ -2,10 +2,25 @@ extends Control
 
 signal action_selected
 
-onready var HealIcon = preload("res://ActionMenu/assets/heal-icon.png")
-onready var BuildIcon = preload("res://ActionMenu/assets/hammer-icon.png")
-onready var DigIcon = preload("res://ActionMenu/assets/dig-icon.png")
-onready var FloodIcon = preload("res://ActionMenu/assets/water-icon.png")
+onready var HealIcon = preload("res://ActionMenu/assets/heal-default.png")
+onready var BuildIcon = preload("res://ActionMenu/assets/hammer-default.png")
+onready var DigIcon = preload("res://ActionMenu/assets/dig-default.png")
+onready var FloodIcon = preload("res://ActionMenu/assets/bucket-default.png")
+
+onready var HealIconHover = preload("res://ActionMenu/assets/heal-hover.png")
+onready var BuildIconHover = preload("res://ActionMenu/assets/hammer-hover.png")
+onready var DigIconHover = preload("res://ActionMenu/assets/dig-hover.png")
+onready var FloodIconHover = preload("res://ActionMenu/assets/bucket-hover.png")
+
+onready var HealIconPress = preload("res://ActionMenu/assets/heal-press.png")
+onready var BuildIconPress = preload("res://ActionMenu/assets/hammer-press.png")
+onready var DigIconPress = preload("res://ActionMenu/assets/dig-press.png")
+onready var FloodIconPress = preload("res://ActionMenu/assets/bucket-press.png")
+
+onready var HealIconDisabled = preload("res://ActionMenu/assets/heal-disable.png")
+onready var BuildIconDisabled = preload("res://ActionMenu/assets/hammer-disable.png")
+onready var DigIconDisabled = preload("res://ActionMenu/assets/dig-disable.png")
+onready var FloodIconDisabled = preload("res://ActionMenu/assets/bucket-disable.png")
 
 onready var Title = $MarginContainer/ActionElements/Info/Title
 onready var Health = $MarginContainer/ActionElements/Info/Health
@@ -57,12 +72,24 @@ func set_special_button():
 		SpecialButton.visible = true
 		if (unit.special_action == Global.ActionType.HEAL):
 			SpecialButton.texture_normal = HealIcon
+			SpecialButton.texture_hover = HealIconHover
+			SpecialButton.texture_pressed = HealIconPress
+			SpecialButton.texture_disabled = HealIconDisabled
 		elif (unit.special_action == Global.ActionType.BUILD):
 			SpecialButton.texture_normal = BuildIcon
+			SpecialButton.texture_hover = BuildIconHover
+			SpecialButton.texture_pressed = BuildIconPress
+			SpecialButton.texture_disabled = BuildIconDisabled
 		elif (unit.special_action == Global.ActionType.DIG):
 			SpecialButton.texture_normal = DigIcon
+			SpecialButton.texture_hover = DigIconHover
+			SpecialButton.texture_pressed = DigIconPress
+			SpecialButton.texture_disabled = DigIconDisabled
 		elif (unit.special_action == Global.ActionType.FLOOD):
 			SpecialButton.texture_normal = FloodIcon
+			SpecialButton.texture_hover = FloodIconHover
+			SpecialButton.texture_pressed = FloodIconPress
+			SpecialButton.texture_disabled = FloodIconDisabled
 		else:
 			SpecialButton.visible = false
 	else:

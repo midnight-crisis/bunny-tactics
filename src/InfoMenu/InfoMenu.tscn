@@ -34,12 +34,12 @@ theme = ExtResource( 1 )
 text = "Turn: Yours"
 
 [node name="EndTurnButton" type="Button" parent="MarginContainer/InfoElements"]
-margin_left = 127.0
-margin_right = 176.0
+margin_left = 122.0
+margin_right = 181.0
 margin_bottom = 17.0
 size_flags_horizontal = 6
 theme = ExtResource( 1 )
-text = "End Turn"
+text = " End Turn "
 
 [node name="Wave" type="Label" parent="MarginContainer/InfoElements"]
 margin_left = 268.0
