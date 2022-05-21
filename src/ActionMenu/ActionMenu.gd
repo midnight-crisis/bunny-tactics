@@ -98,7 +98,7 @@ func set_special_button():
 func set_button_disables():
 	MoveButton.disabled = false
 	AttackButton.disabled = false
-	MoveButton.disabled = false
+	WaitButton.disabled = false
 	SpecialButton.disabled = false
 	
 	if (unit):
@@ -106,7 +106,7 @@ func set_button_disables():
 			MoveButton.disabled = true
 		if (unit.has_acted):
 			AttackButton.disabled = true
-			MoveButton.disabled = true
+			WaitButton.disabled = true
 			SpecialButton.disabled = true
 		
 func _on_move_taken():
@@ -139,6 +139,7 @@ func _on_MoveButton_pressed() -> void:
 
 func _on_WaitButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.WAIT)
+
 	print("Waiting")
 
 func _on_SpecialButton_pressed() -> void:

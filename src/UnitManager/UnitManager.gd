@@ -2,6 +2,7 @@ extends Node2D
 
 signal unit_selected
 signal reachable_tiles_changed
+signal non_target_action_selected
 signal move_taken
 signal action_taken
 
@@ -132,6 +133,9 @@ func _on_action_selected(action):
 		|| current_action == Global.ActionType.BUILD
 		|| current_action == Global.ActionType.FLOOD):
 		reachable_tiles = calculate_reachable_tiles(current_unit.tile_position, current_unit.special_reach)
+	elif(current_action == Global.ActionType.WAIT):
+		reachable_tiles = []
+		emit_signal("non_target_action_selected")
 	else:
 		reachable_tiles = []
 		

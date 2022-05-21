@@ -22,6 +22,7 @@ func _ready() -> void:
 	UnitManager.connect("move_taken", ActionMenu, "_on_move_taken")
 	UnitManager.connect("action_taken", ActionMenu, "_on_action_taken")
 	ActionMenu.connect("action_selected", UnitManager, "_on_action_selected")
+	UnitManager.connect("non_target_action_selected", self, "_on_non_target_action_selected")
 	InfoMenu.connect("turn_end", UnitManager, "_on_turn_end")
 	InfoMenu.connect("turn_end", ActionMenu, "_on_turn_end")
 	InfoMenu.connect("turn_end", self, "_on_turn_end")
@@ -48,6 +49,18 @@ func spawn_damage_particle(pos: Vector2, n):
 	add_child(damage_particle)
 	damage_particle.position = pos
 	damage_particle.set_number(n)
+	
+func _on_non_target_action_selected():
+	if (UnitManager.current_action == Global.ActionType.WAIT):
+		if (!UnitManager.current_unit.has_acted):
+			var heal = UnitManager.current_unit.passive_heal_amount
+			UnitManager.current_unit.hurt(-heal)
+			UnitManager.flag_action()
+			spawn_damage_particle(UnitManager.current_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+	
+	UnitManager.current_action = Global.ActionType.NONE
+	UnitManager.reset_action()
+	ActionMenu.set_info()
 
 func _on_active_tile_change(pos):
 	
@@ -67,13 +80,7 @@ func _on_active_tile_change(pos):
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
 				
-	elif (UnitManager.current_action == Global.ActionType.WAIT):
-		if (!UnitManager.current_unit.has_acted):
-			var heal = UnitManager.current_unit.passive_heal_amount
-			UnitManager.current_unit.hurt(-heal)
-			UnitManager.flag_action()
-			spawn_damage_particle(UnitManager.current_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
-			
+
 	
 	elif (UnitManager.current_action == Global.ActionType.HEAL):
 		var target_unit = UnitManager.units[pos.x][pos.y]
