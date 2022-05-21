@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.42"
+const VERSION = "0.0.43"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
