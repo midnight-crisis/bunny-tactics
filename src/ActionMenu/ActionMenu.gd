@@ -10,6 +10,9 @@ onready var FloodIcon = preload("res://ActionMenu/assets/water-icon.png")
 onready var Title = $MarginContainer/ActionElements/Info/Title
 onready var Health = $MarginContainer/ActionElements/Info/Health
 onready var ActionElements = $MarginContainer/ActionElements
+onready var AttackButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton
+onready var MoveButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton
+onready var WaitButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton
 onready var SpecialButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton
 onready var Tweener = $Tweener
 
@@ -55,8 +58,16 @@ func set_special_button():
 		else:
 			SpecialButton.visible = false
 	else:
-		SpecialButton.visible = false
+		
 		return
+		
+func _on_move_taken():
+	MoveButton.disabled = true
+
+func _on_action_taken():
+	AttackButton.disabled = true
+	MoveButton.disabled = true
+	SpecialButton.disabled = true
 
 func _on_AttackButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.ATTACK)

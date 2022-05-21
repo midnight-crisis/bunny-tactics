@@ -26,6 +26,9 @@ func set_tile(x, y, tile):
 	tiles[x][y] = tile
 	update()
 
+func get_tile(x, y):
+	return tiles[x][y]
+
 func fill(tile:int = Global.Tile.EMPTY):
 	for x in range(Global.MAP_TILES_WIDTH):
 		for y in range(Global.MAP_TILES_HEIGHT):

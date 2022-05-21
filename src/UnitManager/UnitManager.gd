@@ -2,6 +2,8 @@ extends Node2D
 
 signal unit_selected
 signal reachable_tiles_changed
+signal move_taken
+signal action_taken
 
 onready var NormalBunny = preload("res://Unit/units/Bunny/NormalBunny.tscn")
 onready var BuilderBunny = preload("res://Unit/units/Bunny/BuilderBunny.tscn")
@@ -91,6 +93,18 @@ func reset_action():
 	
 func reset_selection():
 	_on_unit_selected(null)
+	
+func flag_move():
+	current_unit.has_moved = true
+	emit_signal("move_taken")
+	
+func flag_action():
+	current_unit.has_acted = true
+	emit_signal("action_taken")
+	
+func reset_flags():
+	current_unit.has_moved = false
+	current_unit.has_acted = false
 
 func _on_unit_selected(unit):
 	if (current_action != Global.ActionType.NONE): 

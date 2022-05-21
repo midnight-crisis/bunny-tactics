@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.32"
+const VERSION = "0.0.35"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -13,6 +13,12 @@ const UNIT_VERTICAL_OFFSET = 4
 const DAMAGE_PARTICLE_Y_OFFSET = -20
 
 var rng = RandomNumberGenerator.new()
+
+enum Team {
+	NONE = 0,
+	PLAYER = 1,
+	ENEMY = 101
+}
 
 # Ground Altas isn't randomized, Godot Bug
 # https://github.com/godotengine/godot/issues/36972

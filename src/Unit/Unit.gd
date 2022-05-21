@@ -3,6 +3,8 @@ class_name Unit
 
 signal unit_clicked
 
+var player_controllable = false
+
 var fullname = "Unnamed"
 var species = "Human"
 var job = "Dummy"
@@ -17,6 +19,9 @@ var attack = 1
 var move_reach = 2
 var attack_reach = 1
 var special_reach = 1
+
+var has_moved = false
+var has_acted = false
 
 onready var Name = $Name
 onready var UnitSprite = $Sprite

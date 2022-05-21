@@ -39,7 +39,7 @@ size_flags_horizontal = 6
 theme = ExtResource( 1 )
 text = "End Turn"
 
-[node name="Turn2" type="Label" parent="MarginContainer/InfoElements"]
+[node name="Wave" type="Label" parent="MarginContainer/InfoElements"]
 margin_left = 268.0
 margin_top = 4.0
 margin_right = 304.0
