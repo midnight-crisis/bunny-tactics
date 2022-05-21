@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.37"
+const VERSION = "0.0.39"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -74,5 +74,21 @@ var UnitScene = {
 	UnitType.ENEMY_SNAKE:  preload("res://Unit/units/Enemy/Snake.tscn")
 }
 
+var Sfx = {
+	"HOVER": preload("res://Audio/assets/hover.mp3")
+}
+
 func _ready() -> void:
 	rng.randomize()
+	
+func PlayAudio(audio_key):
+	var audio_player = AudioStreamPlayer.new()
+	add_child(audio_player)
+	audio_player.stream = Sfx[audio_key]
+	audio_player.connect("finished", self, "_on_audio_player_end", [audio_player])
+	audio_player.play()
+	
+func _on_audio_player_end(audio_player):
+	print("audio player finished")
+	audio_player.stop()
+	audio_player.queue_free()

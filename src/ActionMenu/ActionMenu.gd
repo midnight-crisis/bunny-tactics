@@ -117,3 +117,16 @@ func _on_WaitButton_pressed() -> void:
 func _on_SpecialButton_pressed() -> void:
 	emit_signal("action_selected", unit.special_action)
 	print("Using Special")
+
+func _on_AttackButton_mouse_entered() -> void:
+	Global.PlayAudio("HOVER")
+
+func _on_MoveButton_mouse_entered() -> void:
+	Global.PlayAudio("HOVER")
+
+func _on_WaitButton_mouse_entered() -> void:
+	Global.PlayAudio("HOVER")
+
+func _on_SpecialButton_mouse_entered() -> void:
+	Global.PlayAudio("HOVER")
+
