@@ -5,12 +5,8 @@
 [ext_resource path="res://Unit/units/Enemy/Enemy.gd" type="Script" id=3]
 
 [node name="Unit" instance=ExtResource( 1 )]
-z_index = 1
+z_index = 0
 script = ExtResource( 3 )
 
-[node name="Arrow" parent="." index="1"]
-z_index = -1
-
 [node name="Sprite" parent="." index="2"]
-z_index = -1
 texture = ExtResource( 2 )

@@ -5,6 +5,7 @@ onready var DamageParticle = preload("res://DamageParticle/DamageParticle.tscn")
 onready var Version = $Camera/UI/Version
 onready var ActionMenu = $Camera/UI/ActionMenu
 onready var InfoMenu = $Camera/UI/InfoMenu
+onready var TurnPopup = $Camera/UI/TurnPopup
 onready var GameCamera = $Camera
 onready var UnitManager = $UnitManager
 onready var Map = $Map
@@ -24,6 +25,7 @@ func _ready() -> void:
 	InfoMenu.connect("turn_end", UnitManager, "_on_turn_end")
 	InfoMenu.connect("turn_end", ActionMenu, "_on_turn_end")
 	InfoMenu.connect("turn_end", self, "_on_turn_end")
+	InfoMenu.connect("next_turn", TurnPopup, "_on_next_turn")
 	
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
 
@@ -60,14 +62,15 @@ func _on_active_tile_change(pos):
 		var target_unit = UnitManager.units[pos.x][pos.y]
 		if (target_unit):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
-				target_unit.health -= UnitManager.current_unit.attack
+				var damage = UnitManager.current_unit.attack
+				target_unit.hurt(damage)
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
 				
 	elif (UnitManager.current_action == Global.ActionType.WAIT):
 		if (!UnitManager.current_unit.has_acted):
 			var heal = UnitManager.current_unit.passive_heal_amount
-			UnitManager.current_unit.health = min(UnitManager.current_unit.health + heal, UnitManager.current_unit.max_health) 
+			UnitManager.current_unit.hurt(-heal)
 			UnitManager.flag_action()
 			spawn_damage_particle(UnitManager.current_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
 			
@@ -76,8 +79,8 @@ func _on_active_tile_change(pos):
 		var target_unit = UnitManager.units[pos.x][pos.y]
 		if (target_unit):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
-				var heal = UnitManager.heal_amount
-				target_unit.health = min(target_unit.health + heal, target_unit.max_health) 
+				var heal = UnitManager.current_unit.heal_amount
+				target_unit.hurt(-heal)
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
 				

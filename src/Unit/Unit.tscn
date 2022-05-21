@@ -1,13 +1,46 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Unit/assets/default.png" type="Texture" id=1]
 [ext_resource path="res://Unit/Unit.gd" type="Script" id=2]
 [ext_resource path="res://Unit/assets/arrow.png" type="Texture" id=3]
 [ext_resource path="res://Theme/DefaultTheme.tres" type="Theme" id=4]
+[ext_resource path="res://HealthBar/HealthBar.tscn" type="PackedScene" id=5]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 7.0
 height = 8.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "Float"
+length = 0.6
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6 ),
+"transitions": PoolRealArray( 0.435275, 2.37841, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -4 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [node name="Unit" type="Node2D"]
 z_index = 2
@@ -29,12 +62,16 @@ texture = ExtResource( 1 )
 visible = false
 modulate = Color( 0, 0, 0, 1 )
 margin_left = -20.0
+margin_top = 7.0
 margin_right = 20.0
-margin_bottom = 14.0
+margin_bottom = 21.0
 grow_horizontal = 2
 theme = ExtResource( 4 )
 text = "JobHere"
 align = 1
+
+[node name="HealthBar" parent="." instance=ExtResource( 5 )]
+position = Vector2( 0, 3 )
 
 [node name="InteractArea" type="Area2D" parent="."]
 z_index = 2
@@ -44,6 +81,11 @@ position = Vector2( 0, -9 )
 shape = SubResource( 1 )
 
 [node name="Tweener" type="Tween" parent="."]
+
+[node name="ArrowAnimPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Arrow")
+anims/Float = SubResource( 2 )
+anims/RESET = SubResource( 3 )
 
 [connection signal="input_event" from="InteractArea" to="." method="_on_InteractArea_input_event"]
 [connection signal="mouse_entered" from="InteractArea" to="." method="_on_InteractArea_mouse_entered"]

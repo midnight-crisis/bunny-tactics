@@ -28,11 +28,18 @@ var has_acted = false
 onready var Name = $Name
 onready var UnitSprite = $Sprite
 onready var Arrow = $Arrow
+onready var HealthBar = $HealthBar
 onready var Tweener = $Tweener
 onready var UnitCamera = $Camera
+onready var ArrowAnimPlayer = $ArrowAnimPlayer
 
 func _ready() -> void:
 	Name.text = fullname
+	ArrowAnimPlayer.play("Float")
+	
+func hurt(n):
+	health = clamp(health - n, 0, max_health)
+	HealthBar.set_percentage(float(health) / float(max_health))
 
 func _on_InteractArea_mouse_entered() -> void:
 	Name.visible = true
