@@ -50,9 +50,9 @@ func control(unit_, map_, units_):
 			emit_signal("attack", unit, reachable_unit)
 			
 	else: # No unit in sight
-		var random_tile = move_tiles[randi() % move_tiles.size()]
-		if (random_tile):
-			emit_signal("move", unit, random_tile)
+		if (move_tiles.size() > 0):
+			var random_tile = move_tiles[randi() % move_tiles.size()]
+			if (random_tile): emit_signal("move", unit, random_tile)
 		emit_signal("wait", unit)
 	
 	print("Ending AI")
@@ -104,7 +104,7 @@ func _calcTile(pos, reach):
 		&& (map[pos.x][pos.y] == Global.Tile.GROUND
 		|| (map[pos.x][pos.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
 		|| (map[pos.x][pos.y] == Global.Tile.WATER && unit.can_traverse_water)
-		|| (map[pos.x][pos.y] == Global.Tile.FENCE && unit.can_traverse_fence))):
+		|| (map[pos.x][pos.y] == Global.Tile.WATER && unit.can_traverse_fence))): # CHANGE THIS TO FENCE
 			reachable.append(t)
 			reachable.append_array(_calcTile(t, reach - 1))
 	
