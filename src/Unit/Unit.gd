@@ -2,6 +2,7 @@ extends Node2D
 class_name Unit
 
 signal unit_clicked
+signal unit_dead
 
 var player_controllable = false
 
@@ -50,7 +51,7 @@ func hurt(n):
 	health = clamp(health - n, 0, max_health)
 	HealthBar.set_percentage(float(health) / float(max_health))
 	if (health <= 0):
-		self.queue_free()
+		emit_signal("unit_dead", self)
 	
 func simulate_click():
 	emit_signal("unit_clicked", self)

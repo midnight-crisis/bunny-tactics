@@ -36,6 +36,7 @@ func add_unit(unit_type, x = 0, y = 0):
 	add_child(new_unit)
 	place_unit(new_unit, x, y)
 	new_unit.connect("unit_clicked", self, "_on_unit_selected")
+	new_unit.connect("unit_dead", self, "_on_unit_dead")
 
 func place_unit(unit: Unit, x, y):
 	if (unit):
@@ -76,16 +77,17 @@ func flag_move():
 	emit_signal("move_taken")
 	
 func flag_action():
-	current_unit.has_acted = true
-	emit_signal("action_taken")
+	if (current_unit):
+		current_unit.has_acted = true
+		emit_signal("action_taken")
 	
 func reset_flags():
-	if (current_unit):
+	if (current_unit != null):
 		current_unit.has_moved = false
 		current_unit.has_acted = false
 
 func _on_unit_selected(unit):
-	if (current_action != Global.ActionType.NONE): 
+	if (current_action != Global.ActionType.NONE && unit.health <= 0): 
 		print("Can't select, currently using action.")
 		return
 	
@@ -118,10 +120,18 @@ func _on_action_selected(action):
 	emit_signal("reachable_tiles_changed", reachable_tiles)
 
 func _on_turn_end():
-	reset_flags()
+	for u in get_children():
+		u.has_moved = false
+		u.has_acted = false
 	
 func _on_units_for_placement(units):
 	for u in units:
 		add_child(u)
 		place_unit(u, u.tile_position.x, u.tile_position.y)
 		u.connect("unit_clicked", self, "_on_unit_selected")
+		u.connect("unit_dead", self, "_on_unit_dead")
+		
+func _on_unit_dead(unit):
+	units[unit.tile_position.x][unit.tile_position.y] = null
+	remove_child(unit)
+	unit.queue_free()
