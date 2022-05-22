@@ -117,6 +117,11 @@ func _on_action_selected(action):
 		
 	emit_signal("reachable_tiles_changed", reachable_tiles)
 
-
 func _on_turn_end():
 	reset_flags()
+	
+func _on_units_for_placement(units):
+	for u in units:
+		add_child(u)
+		place_unit(u, u.tile_position.x, u.tile_position.y)
+		u.connect("unit_clicked", self, "_on_unit_selected")

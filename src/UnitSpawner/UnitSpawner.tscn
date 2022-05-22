@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://UnitSpawner/UnitSpawner.gd" type="Script" id=1]
+
+[node name="UnitSpawner" type="Node"]
+script = ExtResource( 1 )

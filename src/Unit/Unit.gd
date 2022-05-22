@@ -49,6 +49,8 @@ func reset_flags():
 func hurt(n):
 	health = clamp(health - n, 0, max_health)
 	HealthBar.set_percentage(float(health) / float(max_health))
+	if (health <= 0):
+		self.queue_free()
 	
 func simulate_click():
 	emit_signal("unit_clicked", self)

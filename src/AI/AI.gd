@@ -61,7 +61,7 @@ func control(unit_, map_, units_):
 			
 	else: # No unit in sight
 		if (move_tiles.size() > 0):
-			move_target = move_tiles[randi() % move_tiles.size()]
+			move_target = move_tiles[Global.rng.randi() % move_tiles.size()]
 			if (move_target): MoveTimer.start(Global.AI_MOVE_TIME)
 		WaitTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
 	

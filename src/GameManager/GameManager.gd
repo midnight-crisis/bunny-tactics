@@ -12,8 +12,10 @@ onready var Map = $Map
 onready var MapGrid = $Map/MapGrid
 onready var Ai = $AI
 onready var AITurnTimer = $AITurnTimer
+onready var UnitSpawner = $UnitSpawner
 
 var turn = Global.Team.PLAYER
+var wave = 1
 
 func _ready() -> void:
 	Version.text = "bunny-tactics v" + Global.VERSION
@@ -30,7 +32,7 @@ func _ready() -> void:
 	InfoMenu.connect("turn_end", self, "_on_turn_end")
 	InfoMenu.connect("next_turn", TurnPopup, "_on_next_turn")
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
-	
+	UnitSpawner.connect("units_for_placement", UnitManager, "_on_units_for_placement")
 	
 	Ai.connect("move", self, "_on_AI_move")
 	Ai.connect("attack", self, "_on_AI_attack")
@@ -38,18 +40,16 @@ func _ready() -> void:
 	AITurnTimer.connect("timeout", self, "_on_AI_turn_timer")
 
 	Map.fill(Global.Tile.GROUND)
-	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 3, 3)
-	UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 2, 5)
-	UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 7, 1)
-	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 9, 7)
-	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 9, 2)
-	UnitManager.add_unit(Global.UnitType.ENEMY_SQUIRREL, 13, 3)
-	UnitManager.add_unit(Global.UnitType.ENEMY_BEE, 3, 4)
-	UnitManager.add_unit(Global.UnitType.ENEMY_BUTTERFLY, 17, 1)
-	UnitManager.add_unit(Global.UnitType.ENEMY_MOLE, 19, 7)
-	UnitManager.add_unit(Global.UnitType.ENEMY_SNAKE, 19, 2)
+	
+	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 0, 1)
+	UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 1, 2)
+	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 1, 4)
+	UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 0, 5)
+	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 2, 3)
+	UnitSpawner.spawn_enemies(wave, Map.tiles, UnitManager.units)
 	
 	turn = Global.Team.PLAYER
+	wave = 1
 
 func spawn_damage_particle(pos: Vector2, n):
 	var damage_particle = DamageParticle.instance()
@@ -217,3 +217,5 @@ func _vIn(v):
 	if ((v.x >= 0 && v.x < Global.MAP_TILES_WIDTH) &&
 		(v.y >= 0 && v.y < Global.MAP_TILES_HEIGHT)): return true
 	return false
+	
+

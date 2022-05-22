@@ -1,19 +1,21 @@
 extends Node
 
-const VERSION = "0.0.62"
+const VERSION = "0.0.65"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
 const CAMERA_Y_OFFSET = 48
 const CELL_WIDTH = 16
 const CELL_HEIGHT = 16
-const MAP_TILES_WIDTH = 24
-const MAP_TILES_HEIGHT = 8
+const MAP_TILES_WIDTH = 18
+const MAP_TILES_HEIGHT = 7
 const UNIT_VERTICAL_OFFSET = 4
 const DAMAGE_PARTICLE_Y_OFFSET = -20
 const AI_UNIT_TIME = 2.5
 const AI_MOVE_TIME = 1.0
 const AI_ACTION_TIME = 1.0
+const SPAWN_ENEMY_BASE_AMOUNT = 3
+const UPGRADE_ENEMY_BASE_AMOUNT = 3
 
 var rng = RandomNumberGenerator.new()
 
