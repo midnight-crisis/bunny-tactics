@@ -67,23 +67,23 @@ func calculate_reachable_tiles(pos, reach):
 	
 	# Add the 8 tiles one tile apart (CW)
 	reachable.append(Vector2(pos.x + 1, pos.y))
-	reachable.append(Vector2(pos.x + 1, pos.y - 1))
+	#reachable.append(Vector2(pos.x + 1, pos.y - 1))
 	reachable.append(Vector2(pos.x, pos.y - 1))
-	reachable.append(Vector2(pos.x - 1, pos.y - 1))
+	#reachable.append(Vector2(pos.x - 1, pos.y - 1))
 	reachable.append(Vector2(pos.x - 1, pos.y))
-	reachable.append(Vector2(pos.x - 1, pos.y + 1))
+	#reachable.append(Vector2(pos.x - 1, pos.y + 1))
 	reachable.append(Vector2(pos.x, pos.y + 1))
-	reachable.append(Vector2(pos.x + 1, pos.y + 1))
+	#reachable.append(Vector2(pos.x + 1, pos.y + 1))
 	
 	# Calculate again with one less reach for those 8 tiles
 	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y - 1), reach - 1))
+	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y - 1), reach - 1))
 	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x, pos.y - 1), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y - 1), reach - 1))
+	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y - 1), reach - 1))
 	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y + 1), reach - 1))
+	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y + 1), reach - 1))
 	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x, pos.y + 1), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y + 1), reach - 1))
+	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y + 1), reach - 1))
 	
 	# HACK: Lots of dupes, could be better
 	return reachable

@@ -11,6 +11,9 @@ var job = "Dummy"
 var team = Global.Team.NONE
 
 var special_action = Global.ActionType.SPECIAL_NONE
+var can_traverse_holes = false
+var can_traverse_water = false
+var can_traverse_fence = false
 
 var tile_position = Vector2(-1, -1)
 var health = 15
