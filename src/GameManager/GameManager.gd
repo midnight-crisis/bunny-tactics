@@ -11,6 +11,7 @@ onready var UnitManager = $UnitManager
 onready var Map = $Map
 onready var MapGrid = $Map/MapGrid
 
+var Ai = AI.new()
 var turn = Global.Team.PLAYER
 
 func _ready() -> void:
@@ -27,8 +28,11 @@ func _ready() -> void:
 	InfoMenu.connect("turn_end", ActionMenu, "_on_turn_end")
 	InfoMenu.connect("turn_end", self, "_on_turn_end")
 	InfoMenu.connect("next_turn", TurnPopup, "_on_next_turn")
-	
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
+	
+	Ai.connect("move", self, "_on_AI_move")
+	Ai.connect("attack", self, "_on_AI_attack")
+	Ai.connect("wait", self, "_on_AI_wait")
 
 	Map.fill(Global.Tile.GROUND)
 	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 3, 3)
@@ -78,9 +82,7 @@ func _on_active_tile_change(pos):
 				var damage = UnitManager.current_unit.attack
 				target_unit.hurt(damage)
 				UnitManager.flag_action()
-				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), UnitManager.current_unit.attack)
-				
-
+				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), damage)
 	
 	elif (UnitManager.current_action == Global.ActionType.HEAL):
 		var target_unit = UnitManager.units[pos.x][pos.y]
@@ -108,12 +110,10 @@ func _on_active_tile_change(pos):
 	ActionMenu.set_info()
 	
 	if (UnitManager.units[pos.x][pos.y] == null):
-		print("hidde")
 		UnitManager.reset_selection()
 		ActionMenu.hide()
 	
 func _on_turn_end():
-	
 	for u in UnitManager.get_children():
 		if (u.team == turn):
 			u.reset_flags()
@@ -121,8 +121,24 @@ func _on_turn_end():
 	if (turn == Global.Team.PLAYER):
 		turn = Global.Team.ENEMY
 		ActionMenu.hide_actions() 
-	elif (Global.Team.ENEMY):
+	elif (turn == Global.Team.ENEMY):
 		turn = Global.Team.PLAYER
 		ActionMenu.show_actions()
-	
+		
+	if (turn == Global.Team.ENEMY):
+		for u in UnitManager.get_children():
+			if (u.team == Global.Team.ENEMY):
+				Ai.control(u, Map.tiles, UnitManager.units)
+				
+func _on_AI_move(unit, pos):
+	UnitManager.place_unit(unit, pos.x, pos.y)
 
+func _on_AI_attack(unit, target):
+	var damage = unit.attack
+	target.hurt(damage)
+	spawn_damage_particle(target.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), damage)
+
+func _on_AI_wait(unit):
+	var heal = unit.passive_heal_amount
+	unit.hurt(-heal)
+	spawn_damage_particle(unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)

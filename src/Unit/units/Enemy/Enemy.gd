@@ -7,3 +7,4 @@ func _init() -> void:
 	species = "Enemy"
 	job = "Template"
 	team = Global.Team.ENEMY
+	move_reach = 3
