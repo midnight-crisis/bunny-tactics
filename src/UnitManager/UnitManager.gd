@@ -116,8 +116,7 @@ func _on_unit_selected(unit):
 		current_unit.Arrow.visible = false
 	if (unit):
 		unit.Arrow.visible = true
-	
-		
+
 	current_unit = unit
 	emit_signal("unit_selected", unit)
 

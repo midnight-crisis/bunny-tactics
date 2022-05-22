@@ -9,11 +9,6 @@
 config_version=4
 
 _global_script_classes=[ {
-"base": "Node",
-"class": "AI",
-"language": "GDScript",
-"path": "res://AI/AI.gd"
-}, {
 "base": "Unit",
 "class": "Bunny",
 "language": "GDScript",
@@ -30,7 +25,6 @@ _global_script_classes=[ {
 "path": "res://Unit/Unit.gd"
 } ]
 _global_script_class_icons={
-"AI": "",
 "Bunny": "",
 "Enemy": "",
 "Unit": ""

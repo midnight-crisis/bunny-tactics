@@ -21,9 +21,13 @@ func _on_EndTurnButton_pressed() -> void:
 	
 	if (turn == Global.Team.PLAYER):
 		turn = Global.Team.ENEMY
+		EndTurnButton.disabled = true
 	elif (Global.Team.ENEMY):
 		turn = Global.Team.PLAYER
+		EndTurnButton.disabled = false
 	
 	update()
 	emit_signal("next_turn", turn_number, Global.TeamName[turn])
 	
+func simulate_end_turn():
+	_on_EndTurnButton_pressed()

@@ -10,8 +10,9 @@ onready var GameCamera = $Camera
 onready var UnitManager = $UnitManager
 onready var Map = $Map
 onready var MapGrid = $Map/MapGrid
+onready var Ai = $AI
+onready var AITurnTimer = $AITurnTimer
 
-var Ai = AI.new()
 var turn = Global.Team.PLAYER
 
 func _ready() -> void:
@@ -30,9 +31,11 @@ func _ready() -> void:
 	InfoMenu.connect("next_turn", TurnPopup, "_on_next_turn")
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
 	
+	
 	Ai.connect("move", self, "_on_AI_move")
 	Ai.connect("attack", self, "_on_AI_attack")
 	Ai.connect("wait", self, "_on_AI_wait")
+	AITurnTimer.connect("timeout", self, "_on_AI_turn_timer")
 
 	Map.fill(Global.Tile.GROUND)
 	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 3, 3)
@@ -41,7 +44,7 @@ func _ready() -> void:
 	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 9, 7)
 	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 9, 2)
 	UnitManager.add_unit(Global.UnitType.ENEMY_SQUIRREL, 13, 3)
-	UnitManager.add_unit(Global.UnitType.ENEMY_BEE, 12, 5)
+	UnitManager.add_unit(Global.UnitType.ENEMY_BEE, 3, 4)
 	UnitManager.add_unit(Global.UnitType.ENEMY_BUTTERFLY, 17, 1)
 	UnitManager.add_unit(Global.UnitType.ENEMY_MOLE, 19, 7)
 	UnitManager.add_unit(Global.UnitType.ENEMY_SNAKE, 19, 2)
@@ -126,11 +129,26 @@ func _on_turn_end():
 		ActionMenu.show_actions()
 		
 	if (turn == Global.Team.ENEMY):
+		var timer_mult = 0
 		for u in UnitManager.get_children():
 			if (u.team == Global.Team.ENEMY):
-				Ai.control(u, Map.tiles, UnitManager.units)
-				
-func _on_AI_move(unit, pos):
+				timer_mult += 1
+				var timer = Timer.new()
+				add_child(timer)
+				timer.start(Global.AI_UNIT_TIME * timer_mult)
+				timer.connect("timeout", self, "_on_AI_unit_timer", [timer, u, Map.tiles, UnitManager.units])
+		AITurnTimer.start(Global.AI_UNIT_TIME * (timer_mult + 1))
+		
+func _on_AI_turn_timer():
+	InfoMenu.simulate_end_turn()
+
+func _on_AI_unit_timer(timer, u, map, units):
+	u.simulate_click()
+	Ai.control(u, map, units)
+	timer.queue_free()
+
+func _on_AI_move(unit, pos):	
+	GameCamera.focus_on_tile(pos)
 	UnitManager.place_unit(unit, pos.x, pos.y)
 
 func _on_AI_attack(unit, target):

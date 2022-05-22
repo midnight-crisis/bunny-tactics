@@ -1,5 +1,4 @@
 extends Node
-class_name AI
 
 signal attack
 signal move
@@ -8,12 +7,18 @@ signal wait
 var unit = null
 var map = []
 var units = []
+var attack_target = null
+var move_target = null
 
-const v0 = Vector2(0,0)
-const vM = Vector2(Global.MAP_TILES_WIDTH, Global.MAP_TILES_HEIGHT)
+onready var AttackTimer = $AttackTimer
+onready var WaitTimer = $WaitTimer
+onready var MoveTimer = $MoveTimer
 
 func _ready() -> void:
-	pass
+	print("Initializing AI...")
+	AttackTimer.connect("timeout", self, "_attack")
+	WaitTimer.connect("timeout", self, "_wait")
+	MoveTimer.connect("timeout", self, "_move")
 	
 func control(unit_, map_, units_):
 	# Start
@@ -32,28 +37,32 @@ func control(unit_, map_, units_):
 	unit = unit_
 	map = map_
 	units = units_
+	attack_target = null
+	move_target = null
 	
 	print("Starting AI for " + String(unit.species))
 	
 	var attack_tiles = get_reachable_tiles(unit.tile_position, unit.attack_reach)
-	var attack_target = pick_attack_target(attack_tiles)
-	if (attack_target != null):
-		emit_signal("attack", unit, attack_target)
-		
 	var move_tiles = get_reachable_tiles(unit.tile_position, unit.move_reach)
-	var reachable_unit = pick_attack_target(move_tiles)
 	
-	if (reachable_unit):
-		var adjacent_tile = pick_accessible_adjacent_tile(move_tiles, reachable_unit.tile_position)
-		if (adjacent_tile):
-			emit_signal("move", unit, adjacent_tile)
-			emit_signal("attack", unit, reachable_unit)
+	attack_target = pick_attack_target(attack_tiles)
+	if (attack_target != null):
+		AttackTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
+		return
+		
+	attack_target = pick_attack_target(move_tiles)
+	if (attack_target):
+		move_target = pick_accessible_adjacent_tile(move_tiles, attack_target.tile_position)
+		if (move_target):
+			MoveTimer.start(Global.AI_MOVE_TIME)
+			AttackTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
+			return
 			
 	else: # No unit in sight
 		if (move_tiles.size() > 0):
-			var random_tile = move_tiles[randi() % move_tiles.size()]
-			if (random_tile): emit_signal("move", unit, random_tile)
-		emit_signal("wait", unit)
+			move_target = move_tiles[randi() % move_tiles.size()]
+			if (move_target): MoveTimer.start(Global.AI_MOVE_TIME)
+		WaitTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
 	
 	print("Ending AI")
 	
@@ -86,6 +95,15 @@ func get_reachable_tiles(pos, reach):
 				tiles.pop_at(j)
 	return tiles
 
+func _move():
+	emit_signal("move", unit, move_target)
+
+func _attack():
+	emit_signal("attack", unit, attack_target)
+
+func _wait():
+	emit_signal("wait", unit)
+
 func _calcTile(pos, reach):
 	if (reach == 0): return []
 	
@@ -104,7 +122,7 @@ func _calcTile(pos, reach):
 		&& (map[pos.x][pos.y] == Global.Tile.GROUND
 		|| (map[pos.x][pos.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
 		|| (map[pos.x][pos.y] == Global.Tile.WATER && unit.can_traverse_water)
-		|| (map[pos.x][pos.y] == Global.Tile.WATER && unit.can_traverse_fence))): # CHANGE THIS TO FENCE
+		|| (map[pos.x][pos.y] == Global.Tile.FENCE && unit.can_traverse_fence))): # CHANGE THIS TO FENCE
 			reachable.append(t)
 			reachable.append_array(_calcTile(t, reach - 1))
 	
