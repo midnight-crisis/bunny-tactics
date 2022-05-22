@@ -38,6 +38,7 @@ onready var ArrowAnimPlayer = $ArrowAnimPlayer
 
 func _ready() -> void:
 	Name.text = fullname
+	HealthBar.set_percentage(float(health) / float(max_health))
 	ArrowAnimPlayer.play("Float")
 	
 func reset_flags():

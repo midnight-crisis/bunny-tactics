@@ -1,4 +1,5 @@
 extends Node
+class_name AI
 
 signal attack
 signal move
@@ -119,10 +120,10 @@ func _calcTile(pos, reach):
 	# Reiterate at NESW with 1 less reach
 	for t in targets:
 		if (_vIn(t)
-		&& (map[pos.x][pos.y] == Global.Tile.GROUND
-		|| (map[pos.x][pos.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
-		|| (map[pos.x][pos.y] == Global.Tile.WATER && unit.can_traverse_water)
-		|| (map[pos.x][pos.y] == Global.Tile.FENCE && unit.can_traverse_fence))): # CHANGE THIS TO FENCE
+		&& (map[t.x][t.y] == Global.Tile.GROUND
+		|| (map[t.x][t.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
+		|| (map[t.x][t.y] == Global.Tile.WATER && unit.can_traverse_water)
+		|| (map[t.x][t.y] == Global.Tile.FENCE && unit.can_traverse_fence))): # CHANGE THIS TO FENCE
 			reachable.append(t)
 			reachable.append_array(_calcTile(t, reach - 1))
 	

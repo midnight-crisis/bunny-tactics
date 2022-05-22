@@ -11,11 +11,13 @@ onready var BuilderBunny = preload("res://Unit/units/Bunny/BuilderBunny.tscn")
 onready var DiggerBunny = preload("res://Unit/units/Bunny/DiggerBunny.tscn")
 onready var FlooderBunny = preload("res://Unit/units/Bunny/FlooderBunny.tscn")
 onready var HealerBunny = preload("res://Unit/units/Bunny/HealerBunny.tscn")
+onready var GameManager = get_parent()
 
 var units = []
 var current_unit = null
 var current_action = Global.ActionType.NONE
 var reachable_tiles = []
+onready var TileCalcHelper = AI.new() # Ai already can calc reachable tiles so I'm just gonna use that lol
 
 func _init():
 	for x in range(Global.MAP_TILES_WIDTH):
@@ -61,32 +63,7 @@ func get_unit(x, y):
 	
 # Iterative
 func calculate_reachable_tiles(pos, reach):
-	if (reach == 0): return []
-	
-	var reachable = []
-	
-	# Add the 8 tiles one tile apart (CW)
-	reachable.append(Vector2(pos.x + 1, pos.y))
-	#reachable.append(Vector2(pos.x + 1, pos.y - 1))
-	reachable.append(Vector2(pos.x, pos.y - 1))
-	#reachable.append(Vector2(pos.x - 1, pos.y - 1))
-	reachable.append(Vector2(pos.x - 1, pos.y))
-	#reachable.append(Vector2(pos.x - 1, pos.y + 1))
-	reachable.append(Vector2(pos.x, pos.y + 1))
-	#reachable.append(Vector2(pos.x + 1, pos.y + 1))
-	
-	# Calculate again with one less reach for those 8 tiles
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y), reach - 1))
-	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y - 1), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x, pos.y - 1), reach - 1))
-	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y - 1), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y), reach - 1))
-	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x - 1, pos.y + 1), reach - 1))
-	reachable.append_array(calculate_reachable_tiles(Vector2(pos.x, pos.y + 1), reach - 1))
-	#reachable.append_array(calculate_reachable_tiles(Vector2(pos.x + 1, pos.y + 1), reach - 1))
-	
-	# HACK: Lots of dupes, could be better
-	return reachable
+	return GameManager.get_reachable_tiles(current_unit, pos, reach)
 
 func reset_action():
 	_on_action_selected(Global.ActionType.NONE)

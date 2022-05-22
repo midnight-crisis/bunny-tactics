@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.58"
+const VERSION = "0.0.60"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -45,7 +45,7 @@ enum ActionType {
 	ATTACK = 1,
 	MOVE = 2,
 	WAIT = 3,
-	SPECIAL_NONE = 10
+	SPECIAL_NONE = 10,
 	BUILD = 11,
 	DIG = 12,
 	FLOOD = 13,

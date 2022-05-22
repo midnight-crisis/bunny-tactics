@@ -9,3 +9,4 @@ func _init() -> void:
 	move_reach = 2
 	attack_reach = 1
 	special_reach = 1
+	can_traverse_fence = true

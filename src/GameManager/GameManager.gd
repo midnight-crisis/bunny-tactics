@@ -107,6 +107,12 @@ func _on_active_tile_change(pos):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				Map.set_tile(pos.x, pos.y, Global.Tile.WATER)
 				UnitManager.flag_action()
+	
+	elif (UnitManager.current_action == Global.ActionType.BUILD && (Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND)):
+		if (UnitManager.get_unit(pos.x, pos.y) == null && Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND):
+			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
+				Map.set_tile(pos.x, pos.y, Global.Tile.FENCE)
+				UnitManager.flag_action()
 		
 	UnitManager.current_action = Global.ActionType.NONE
 	UnitManager.reset_action()
@@ -141,6 +147,9 @@ func _on_turn_end():
 		
 func _on_AI_turn_timer():
 	InfoMenu.simulate_end_turn()
+	for u in UnitManager.get_children():
+			if (u.team == Global.Team.PLAYER):
+					u.simulate_click()
 
 func _on_AI_unit_timer(timer, u, map, units):
 	u.simulate_click()
@@ -160,3 +169,41 @@ func _on_AI_wait(unit):
 	var heal = unit.passive_heal_amount
 	unit.hurt(-heal)
 	spawn_damage_particle(unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+	
+func get_reachable_tiles(unit, pos, reach):
+	var tiles = _calcTile(unit, pos, reach)
+	
+	for i in range(0, tiles.size()):
+		for j in range(tiles.size() - 1, i):
+			if (tiles[i] == tiles[j]):
+				tiles.pop_at(j)
+	return tiles
+
+func _calcTile(unit, pos, reach):
+	if (reach == 0): return []
+	
+	var reachable = []
+	var targets = [
+		Vector2(pos.x, pos.y + 1),
+		Vector2(pos.x + 1, pos.y),
+		Vector2(pos.x, pos.y - 1),
+		Vector2(pos.x - 1, pos.y)
+	]
+	
+	# Add NESW if eligible
+	# Reiterate at NESW with 1 less reach
+	for t in targets:
+		if (_vIn(t) && (!UnitManager.units[t.x][t.y] || UnitManager.current_action == Global.ActionType.ATTACK)
+		&& (Map.tiles[t.x][t.y] == Global.Tile.GROUND
+		|| (Map.tiles[t.x][t.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
+		|| (Map.tiles[t.x][t.y] == Global.Tile.WATER && unit.can_traverse_water)
+		|| (Map.tiles[t.x][t.y] == Global.Tile.FENCE && unit.can_traverse_fence))):
+			reachable.append(t)
+			reachable.append_array(_calcTile(unit, t, reach - 1))
+	
+	return reachable
+
+func _vIn(v):
+	if ((v.x >= 0 && v.x < Global.MAP_TILES_WIDTH) &&
+		(v.y >= 0 && v.y < Global.MAP_TILES_HEIGHT)): return true
+	return false

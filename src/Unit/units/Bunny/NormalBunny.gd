@@ -8,3 +8,6 @@ func _init() -> void:
 	move_reach = 4
 	attack_reach = 1
 	special_reach = 0
+
+	can_traverse_water = true
+	can_traverse_fence = true
