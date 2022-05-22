@@ -35,6 +35,7 @@ onready var HealthBar = $HealthBar
 onready var Tweener = $Tweener
 onready var UnitCamera = $Camera
 onready var ArrowAnimPlayer = $ArrowAnimPlayer
+onready var SpriteAnimPlayer = $SpriteAnimPlayer
 
 func _ready() -> void:
 	Name.text = fullname
@@ -51,6 +52,18 @@ func hurt(n):
 	
 func simulate_click():
 	emit_signal("unit_clicked", self)
+	
+func anim_attack():
+	SpriteAnimPlayer.play("attack")
+	
+func anim_move():
+	SpriteAnimPlayer.play("move")
+	
+func anim_wait():
+	SpriteAnimPlayer.play("wait")
+
+func anim_special():
+	SpriteAnimPlayer.play("special")
 
 func _on_InteractArea_mouse_entered() -> void:
 	Name.visible = true

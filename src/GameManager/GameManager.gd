@@ -64,6 +64,7 @@ func _on_non_target_action_selected():
 			UnitManager.current_unit.hurt(-heal)
 			UnitManager.flag_action()
 			spawn_damage_particle(UnitManager.current_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+			UnitManager.current_unit.anim_wait()
 	
 	UnitManager.current_action = Global.ActionType.NONE
 	UnitManager.reset_action()
@@ -77,6 +78,7 @@ func _on_active_tile_change(pos):
 				UnitManager.place_unit(UnitManager.current_unit, pos.x, pos.y)
 				UnitManager.flag_move()
 				GameCamera.focus_on_tile(pos)
+				UnitManager.current_unit.anim_move()
 		
 	elif (UnitManager.current_action == Global.ActionType.ATTACK):
 		var target_unit = UnitManager.units[pos.x][pos.y]
@@ -86,6 +88,7 @@ func _on_active_tile_change(pos):
 				target_unit.hurt(damage)
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), damage)
+				UnitManager.current_unit.anim_attack()
 	
 	elif (UnitManager.current_action == Global.ActionType.HEAL):
 		var target_unit = UnitManager.units[pos.x][pos.y]
@@ -95,24 +98,28 @@ func _on_active_tile_change(pos):
 				target_unit.hurt(-heal)
 				UnitManager.flag_action()
 				spawn_damage_particle(target_unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+				UnitManager.current_unit.anim_special()
 				
 	elif (UnitManager.current_action == Global.ActionType.DIG && (Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND)):
 		if (UnitManager.get_unit(pos.x, pos.y) == null && Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				Map.set_tile(pos.x, pos.y, Global.Tile.EMPTY)
 				UnitManager.flag_action()
+				UnitManager.current_unit.anim_special()
 	
 	elif (UnitManager.current_action == Global.ActionType.FLOOD):
 		if (UnitManager.get_unit(pos.x, pos.y) == null && (Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND || Map.get_tile(pos.x, pos.y) == Global.Tile.EMPTY)):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				Map.set_tile(pos.x, pos.y, Global.Tile.WATER)
 				UnitManager.flag_action()
+				UnitManager.current_unit.anim_special()
 	
 	elif (UnitManager.current_action == Global.ActionType.BUILD && (Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND)):
 		if (UnitManager.get_unit(pos.x, pos.y) == null && Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND):
 			if (UnitManager.reachable_tiles.has(pos) && !UnitManager.current_unit.has_acted):
 				Map.set_tile(pos.x, pos.y, Global.Tile.FENCE)
 				UnitManager.flag_action()
+				UnitManager.current_unit.anim_special()
 		
 	UnitManager.current_action = Global.ActionType.NONE
 	UnitManager.reset_action()
@@ -159,16 +166,19 @@ func _on_AI_unit_timer(timer, u, map, units):
 func _on_AI_move(unit, pos):	
 	GameCamera.focus_on_tile(pos)
 	UnitManager.place_unit(unit, pos.x, pos.y)
+	unit.anim_move()
 
 func _on_AI_attack(unit, target):
 	var damage = unit.attack
 	target.hurt(damage)
 	spawn_damage_particle(target.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), damage)
+	unit.anim_attack()
 
 func _on_AI_wait(unit):
 	var heal = unit.passive_heal_amount
 	unit.hurt(-heal)
 	spawn_damage_particle(unit.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+	unit.anim_wait()
 	
 func get_reachable_tiles(unit, pos, reach):
 	var tiles = _calcTile(unit, pos, reach)
