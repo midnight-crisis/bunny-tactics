@@ -5,6 +5,7 @@ signal next_turn
 
 onready var EndTurnButton = $MarginContainer/InfoElements/EndTurnButton
 onready var Turn = $MarginContainer/InfoElements/Turn
+onready var Wave = $MarginContainer/InfoElements/Wave
 
 var turn = Global.Team.PLAYER
 var turn_number = 1
@@ -31,3 +32,6 @@ func _on_EndTurnButton_pressed() -> void:
 	
 func simulate_end_turn():
 	_on_EndTurnButton_pressed()
+	
+func set_wave(n):
+	Wave.text = "Wave " + String(n)

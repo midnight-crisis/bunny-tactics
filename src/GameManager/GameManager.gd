@@ -50,6 +50,7 @@ func _ready() -> void:
 	
 	turn = Global.Team.PLAYER
 	wave = 1
+	InfoMenu.set_wave(wave)
 
 func spawn_damage_particle(pos: Vector2, n):
 	var damage_particle = DamageParticle.instance()
@@ -129,10 +130,23 @@ func _on_active_tile_change(pos):
 		UnitManager.reset_selection()
 		ActionMenu.hide()
 	
-func _on_turn_end():
+func _check_if_enemies_remain():
 	for u in UnitManager.get_children():
-		if (u.team == turn):
-			u.reset_flags()
+		if (u.team == Global.Team.ENEMY):
+			return true
+	return false
+	
+func _on_turn_end():		
+
+	for u in UnitManager.get_children():
+		u.reset_flags()
+	
+	if (!_check_if_enemies_remain() && turn == Global.Team.ENEMY):
+		wave += 1
+		InfoMenu.turn_number = 0
+		InfoMenu.set_wave(wave)
+		UnitSpawner.spawn_enemies(wave, Map.tiles, UnitManager.units)
+		
 	
 	if (turn == Global.Team.PLAYER):
 		turn = Global.Team.ENEMY
@@ -140,6 +154,8 @@ func _on_turn_end():
 	elif (turn == Global.Team.ENEMY):
 		turn = Global.Team.PLAYER
 		ActionMenu.show_actions()
+	
+
 		
 	if (turn == Global.Team.ENEMY):
 		var timer_mult = 0
@@ -151,6 +167,7 @@ func _on_turn_end():
 				timer.start(Global.AI_UNIT_TIME * timer_mult)
 				timer.connect("timeout", self, "_on_AI_unit_timer", [timer, u, Map.tiles, UnitManager.units])
 		AITurnTimer.start(Global.AI_UNIT_TIME * (timer_mult + 1))
+	
 		
 func _on_AI_turn_timer():
 	InfoMenu.simulate_end_turn()
