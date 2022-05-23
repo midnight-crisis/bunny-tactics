@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.75"
+const VERSION = "0.1.0"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -82,7 +82,17 @@ var UnitScene = {
 }
 
 var Sfx = {
-	"HOVER": preload("res://Audio/assets/hover.mp3")
+	"HOVER": preload("res://Audio/assets/Bun Bun Battlefield SFX - BUTTON HOVER 1.mp3"),
+	"CLICK": preload("res://Audio/assets/Bun Bun Battlefield SFX - BUTTON PRESS 1.mp3"),
+	"ATTACK": preload("res://Audio/assets/Bun Bun Battlefield SFX - ATTACK 1.mp3"),
+	"BUILD": preload("res://Audio/assets/Bun Bun Battlefield SFX - BUILD 1.mp3"),
+	"DIG": preload("res://Audio/assets/Bun Bun Battlefield SFX - DIG 1.mp3"),
+	"FLOOD": preload("res://Audio/assets/Bun Bun Battlefield SFX - FLOOD 1.mp3"),
+	"MOVE": preload("res://Audio/assets/Bun Bun Battlefield SFX - FOOTSTEPS 1.mp3"),
+	"HEAL": preload("res://Audio/assets/Bun Bun Battlefield SFX - HEAL 1.mp3"),
+	"OUCH": preload("res://Audio/assets/Bun Bun Battlefield SFX - OUCH 1.mp3"),
+	"DEATH": preload("res://Audio/assets/Bun Bun Battlefield SFX - DEATH WOOSH 1.mp3"),
+	"ENDTURN": preload("res://Audio/assets/Bun_Bun_Battlefield_SFX_-_END_TURN_1.mp3")
 }
 
 func _ready() -> void:
@@ -92,6 +102,7 @@ func PlayAudio(audio_key):
 	var audio_player = AudioStreamPlayer.new()
 	add_child(audio_player)
 	audio_player.stream = Sfx[audio_key]
+	audio_player.volume_db = -11.0
 	audio_player.connect("finished", self, "_on_audio_player_end", [audio_player])
 	audio_player.play()
 	

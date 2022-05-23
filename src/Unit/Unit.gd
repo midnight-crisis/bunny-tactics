@@ -53,18 +53,24 @@ func hurt(n):
 	HealthBar.set_percentage(float(health) / float(max_health))
 	if (health <= 0):
 		emit_signal("unit_dead", self)
+		Global.PlayAudio("DEATH")
+	else:
+		Global.PlayAudio("OUCH")
 	
 func simulate_click():
 	emit_signal("unit_clicked", self)
 	
 func anim_attack():
 	SpriteAnimPlayer.play("attack")
+	Global.PlayAudio("ATTACK")
 	
 func anim_move():
 	SpriteAnimPlayer.play("move")
+	Global.PlayAudio("MOVE")
 	
 func anim_wait():
 	SpriteAnimPlayer.play("wait")
+	Global.PlayAudio("HOVER")
 
 func anim_special():
 	SpriteAnimPlayer.play("special")

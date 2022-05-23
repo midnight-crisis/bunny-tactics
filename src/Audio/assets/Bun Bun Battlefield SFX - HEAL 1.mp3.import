@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bun Bun Battlefield SFX - HEAL 1.mp3-3a20d033681719b0ce22d5fe6049c3ed.mp3str"
+
+[deps]
+
+source_file="res://Audio/assets/Bun Bun Battlefield SFX - HEAL 1.mp3"
+dest_files=[ "res://.import/Bun Bun Battlefield SFX - HEAL 1.mp3-3a20d033681719b0ce22d5fe6049c3ed.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

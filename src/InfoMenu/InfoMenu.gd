@@ -27,6 +27,8 @@ func _on_EndTurnButton_pressed() -> void:
 		turn = Global.Team.PLAYER
 		EndTurnButton.disabled = false
 	
+	Global.PlayAudio("ENDTURN")
+	
 	update()
 	emit_signal("next_turn", turn_number, Global.TeamName[turn])
 	

@@ -132,19 +132,22 @@ func show_actions():
 func _on_AttackButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.ATTACK)
 	print("Attacking")
+	Global.PlayAudio("CLICK")
 
 func _on_MoveButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.MOVE)
 	print("Moving")
+	Global.PlayAudio("CLICK")
 
 func _on_WaitButton_pressed() -> void:
 	emit_signal("action_selected", Global.ActionType.WAIT)
-
 	print("Waiting")
+	Global.PlayAudio("CLICK")
 
 func _on_SpecialButton_pressed() -> void:
 	emit_signal("action_selected", unit.special_action)
 	print("Using Special")
+	Global.PlayAudio("CLICK")
 
 func _on_AttackButton_mouse_entered() -> void:
 	Global.PlayAudio("HOVER")

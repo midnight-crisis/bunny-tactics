@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bun Bun Battlefield SFX - BUTTON HOVER 1.mp3-2d8d1b7b307af87bea22b2a8f457a778.mp3str"
+
+[deps]
+
+source_file="res://Audio/assets/Bun Bun Battlefield SFX - BUTTON HOVER 1.mp3"
+dest_files=[ "res://.import/Bun Bun Battlefield SFX - BUTTON HOVER 1.mp3-2d8d1b7b307af87bea22b2a8f457a778.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
