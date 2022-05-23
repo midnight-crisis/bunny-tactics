@@ -1,5 +1,7 @@
 extends Node2D
 
+signal game_over
+
 onready var DamageParticle = preload("res://DamageParticle/DamageParticle.tscn")
 
 onready var Version = $Camera/UI/Version
@@ -45,10 +47,10 @@ func _ready() -> void:
 	Map.fill(Global.Tile.GROUND)
 	
 	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 0, 1)
-	UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 1, 2)
-	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 1, 4)
-	UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 0, 5)
-	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 2, 3)
+	#UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 1, 2)
+	#UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 1, 4)
+	#UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 0, 5)
+	#UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 2, 3)
 	UnitSpawner.spawn_enemies(wave, Map.tiles, UnitManager.units)
 	
 	turn = Global.Team.PLAYER
@@ -154,7 +156,17 @@ func _on_turn_end():
 		for u in UnitManager.get_children():
 			if (u.team == Global.Team.PLAYER):
 				friendly_units.append(u)
-		UpgradeMenu.upgrade(friendly_units)		
+		UpgradeMenu.upgrade(friendly_units)	
+	
+	if (turn == Global.Team.ENEMY):
+		var friendly_units = []
+		for u in UnitManager.get_children():
+			if (u.team == Global.Team.PLAYER):
+				friendly_units.append(u)
+				
+		if (friendly_units == []):
+			print("Game over!")
+			emit_signal("game_over", wave)
 			
 	if (turn == Global.Team.PLAYER):
 		turn = Global.Team.ENEMY
