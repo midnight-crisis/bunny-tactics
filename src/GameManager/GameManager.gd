@@ -13,6 +13,7 @@ onready var MapGrid = $Map/MapGrid
 onready var Ai = $AI
 onready var AITurnTimer = $AITurnTimer
 onready var UnitSpawner = $UnitSpawner
+onready var UpgradeMenu = $Camera/UI/UpgradeMenu
 
 var turn = Global.Team.PLAYER
 var wave = 1
@@ -33,7 +34,9 @@ func _ready() -> void:
 	InfoMenu.connect("next_turn", TurnPopup, "_on_next_turn")
 	Map.connect("active_tile_changed", self, "_on_active_tile_change")
 	UnitSpawner.connect("units_for_placement", UnitManager, "_on_units_for_placement")
-	
+	UpgradeMenu.connect("upgrade_add_unit", self, "_on_upgrade_add_unit")
+	UpgradeMenu.connect("upgrade_heal", self, "_on_upgrade_heal")
+
 	Ai.connect("move", self, "_on_AI_move")
 	Ai.connect("attack", self, "_on_AI_attack")
 	Ai.connect("wait", self, "_on_AI_wait")
@@ -147,7 +150,12 @@ func _on_turn_end():
 		InfoMenu.set_wave(wave)
 		UnitSpawner.spawn_enemies(wave, Map.tiles, UnitManager.units)
 		
-	
+		var friendly_units = []
+		for u in UnitManager.get_children():
+			if (u.team == Global.Team.PLAYER):
+				friendly_units.append(u)
+		UpgradeMenu.upgrade(friendly_units)		
+			
 	if (turn == Global.Team.PLAYER):
 		turn = Global.Team.ENEMY
 		ActionMenu.hide_actions() 
@@ -155,8 +163,6 @@ func _on_turn_end():
 		turn = Global.Team.PLAYER
 		ActionMenu.show_actions()
 	
-
-		
 	if (turn == Global.Team.ENEMY):
 		var timer_mult = 0
 		for u in UnitManager.get_children():
@@ -235,4 +241,32 @@ func _vIn(v):
 		(v.y >= 0 && v.y < Global.MAP_TILES_HEIGHT)): return true
 	return false
 	
+func _on_upgrade_add_unit():
+	var empty_tile = _get_empty_tile_on_left_side()
+	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, empty_tile.x, empty_tile.y)
 
+func _on_upgrade_heal():
+	for u in UnitManager.get_children():
+		if (u.team == Global.Team.PLAYER):
+			var heal = int(ceil(u.max_health / 2))
+			u.hurt(-heal)
+			spawn_damage_particle(u.position + Vector2(0, Global.DAMAGE_PARTICLE_Y_OFFSET), -heal)
+			
+func _get_empty_tile_on_left_side():
+	var ok = false
+	var pos = Vector2(-1, -1)
+	while(!ok):
+		pos = _get_random_tile_on_left_side()
+		
+		if (pos.x < 0 || pos.x > Global.MAP_TILES_WIDTH): ok = false
+		elif (pos.y < 0 || pos.y > Global.MAP_TILES_HEIGHT): ok = false
+		elif (Map.tiles[pos.x][pos.y] != Global.Tile.GROUND): ok = false
+		elif (UnitManager.units[pos.x][pos.y] != null): ok = false
+		else: ok = true
+		
+	return pos
+
+func _get_random_tile_on_left_side():
+	var midpoint = int(floor(Global.MAP_TILES_WIDTH / 2))
+	return Vector2(Global.rng.randi() % midpoint, Global.rng.randi() % Global.MAP_TILES_HEIGHT)
+			

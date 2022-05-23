@@ -1,6 +1,6 @@
 extends Node
 
-const VERSION = "0.0.68"
+const VERSION = "0.0.70"
 
 const WINDOW_WIDTH = 320
 const WINDOW_HEIGHT = 180
@@ -16,6 +16,7 @@ const AI_MOVE_TIME = 1.0
 const AI_ACTION_TIME = 1.0
 const SPAWN_ENEMY_BASE_AMOUNT = 1
 const UPGRADE_ENEMY_BASE_AMOUNT = 3
+const UPGRADE_HEAL_PERCENTAGE = 0.5
 
 var rng = RandomNumberGenerator.new()
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://GameManager/GameManager.gd" type="Script" id=1]
 [ext_resource path="res://Map/Map.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://TurnPopup/TurnPopup.tscn" type="PackedScene" id=8]
 [ext_resource path="res://AI/AI.tscn" type="PackedScene" id=9]
 [ext_resource path="res://UnitSpawner/UnitSpawner.tscn" type="PackedScene" id=10]
+[ext_resource path="res://UpgradeMenu/UpgradeMenu.tscn" type="PackedScene" id=11]
 
 [node name="GameManager" type="Node2D"]
 script = ExtResource( 1 )
@@ -31,6 +32,9 @@ margin_right = 320.0
 margin_bottom = 180.0
 mouse_filter = 2
 mouse_default_cursor_shape = 4
+
+[node name="UpgradeMenu" parent="Camera/UI" instance=ExtResource( 11 )]
+visible = false
 
 [node name="TurnPopup" parent="Camera/UI" instance=ExtResource( 8 )]
 
