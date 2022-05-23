@@ -4,6 +4,7 @@ signal active_tile_changed
 
 onready var MapTiles = $MapTiles
 onready var MapGrid = $MapGrid
+onready var GameManager = get_parent()
 
 var tiles = []
 var active_tile_position = Vector2(-1, -1)

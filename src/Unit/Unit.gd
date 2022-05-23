@@ -37,6 +37,7 @@ onready var Tweener = $Tweener
 onready var UnitCamera = $Camera
 onready var ArrowAnimPlayer = $ArrowAnimPlayer
 onready var SpriteAnimPlayer = $SpriteAnimPlayer
+onready var UnitManager = get_parent()
 
 func _ready() -> void:
 	Name.text = fullname
@@ -75,5 +76,8 @@ func _on_InteractArea_mouse_exited() -> void:
 	Name.visible = false
 
 func _on_InteractArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if (UnitManager.current_action != Global.ActionType.NONE):
+		print("nopeasdjkaskldj;lasd")
+		return
 	if (event is InputEventMouseButton && event.pressed && Input.is_action_pressed("click")):
 		emit_signal("unit_clicked", self)

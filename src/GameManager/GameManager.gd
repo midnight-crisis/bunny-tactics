@@ -47,10 +47,10 @@ func _ready() -> void:
 	Map.fill(Global.Tile.GROUND)
 	
 	UnitManager.add_unit(Global.UnitType.BUNNY_FLOODER, 0, 1)
-	#UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 1, 2)
-	#UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 1, 4)
-	#UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 0, 5)
-	#UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 2, 3)
+	UnitManager.add_unit(Global.UnitType.BUNNY_HEALER, 1, 2)
+	UnitManager.add_unit(Global.UnitType.BUNNY_DIGGER, 1, 4)
+	UnitManager.add_unit(Global.UnitType.BUNNY_BUILDER, 0, 5)
+	UnitManager.add_unit(Global.UnitType.BUNNY_NORMAL, 2, 3)
 	UnitSpawner.spawn_enemies(wave, Map.tiles, UnitManager.units)
 	
 	turn = Global.Team.PLAYER
@@ -77,6 +77,7 @@ func _on_non_target_action_selected():
 	ActionMenu.set_info()
 
 func _on_active_tile_change(pos):
+	
 	
 	if (UnitManager.current_action == Global.ActionType.MOVE):
 		if (UnitManager.get_unit(pos.x, pos.y) == null && Map.get_tile(pos.x, pos.y) == Global.Tile.GROUND):
@@ -185,7 +186,6 @@ func _on_turn_end():
 				timer.start(Global.AI_UNIT_TIME * timer_mult)
 				timer.connect("timeout", self, "_on_AI_unit_timer", [timer, u, Map.tiles, UnitManager.units])
 		AITurnTimer.start(Global.AI_UNIT_TIME * (timer_mult + 1))
-	
 		
 func _on_AI_turn_timer():
 	InfoMenu.simulate_end_turn()
@@ -238,7 +238,7 @@ func _calcTile(unit, pos, reach):
 	# Add NESW if eligible
 	# Reiterate at NESW with 1 less reach
 	for t in targets:
-		if (_vIn(t) && (!UnitManager.units[t.x][t.y] || UnitManager.current_action == Global.ActionType.ATTACK)
+		if (_vIn(t) && (!UnitManager.units[t.x][t.y] || UnitManager.current_action == Global.ActionType.ATTACK || UnitManager.current_action == Global.ActionType.HEAL)
 		&& (Map.tiles[t.x][t.y] == Global.Tile.GROUND
 		|| (Map.tiles[t.x][t.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
 		|| (Map.tiles[t.x][t.y] == Global.Tile.WATER && unit.can_traverse_water)
