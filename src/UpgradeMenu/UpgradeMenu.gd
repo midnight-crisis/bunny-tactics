@@ -90,7 +90,7 @@ func apply_unit_upgrade(unit):
 	elif (upgrade_selected == Upgrades.ATTACK_REACH):
 		unit.attack_reach += 1
 	elif (upgrade_selected == Upgrades.MEDIC_HEAL):
-		unit.heal_amount = int(floor(unit.heal_amount * 1.333))
+		unit.heal_amount = int(floor(unit.heal_amount * 1.5))
 	else:
 		print("Invalid unit upgrade?")
 	
