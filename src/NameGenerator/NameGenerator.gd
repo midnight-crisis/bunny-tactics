@@ -10,7 +10,7 @@ var GoodNames = [
 	"Geert",
 	"Mary Ann",
 	"Cissy",
-	"Olivia",
+	"Yeppenny",
 	"Ri",
 	"Soren",
 	"Mai",
