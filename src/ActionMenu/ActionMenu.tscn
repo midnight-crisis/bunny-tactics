@@ -1,0 +1,148 @@
+[gd_scene load_steps=21 format=2]
+
+[ext_resource path="res://ActionMenu/assets/wait-default.png" type="Texture" id=1]
+[ext_resource path="res://ActionMenu/assets/attack-hover.png" type="Texture" id=2]
+[ext_resource path="res://ActionMenu/assets/heal-disable.png" type="Texture" id=3]
+[ext_resource path="res://ActionMenu/assets/attack-press.png" type="Texture" id=4]
+[ext_resource path="res://Theme/DefaultTheme.tres" type="Theme" id=5]
+[ext_resource path="res://ActionMenu/ActionMenu.gd" type="Script" id=6]
+[ext_resource path="res://ActionMenu/assets/move-default.png" type="Texture" id=7]
+[ext_resource path="res://ActionMenu/assets/bg.png" type="Texture" id=8]
+[ext_resource path="res://ActionMenu/assets/move-hover.png" type="Texture" id=9]
+[ext_resource path="res://ActionMenu/assets/attack-disable.png" type="Texture" id=10]
+[ext_resource path="res://ActionMenu/assets/wait-hover.png" type="Texture" id=11]
+[ext_resource path="res://ActionMenu/assets/move-disable.png" type="Texture" id=12]
+[ext_resource path="res://ActionMenu/assets/wait-disable.png" type="Texture" id=13]
+[ext_resource path="res://ActionMenu/assets/wait-press.png" type="Texture" id=14]
+[ext_resource path="res://ActionMenu/assets/attack-default.png" type="Texture" id=15]
+[ext_resource path="res://ActionMenu/assets/move-press.png" type="Texture" id=16]
+[ext_resource path="res://ActionMenu/assets/heal-hover.png" type="Texture" id=17]
+[ext_resource path="res://ActionMenu/assets/heal-press.png" type="Texture" id=18]
+[ext_resource path="res://ActionMenu/assets/heal-default.png" type="Texture" id=19]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="ActionMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 48.0
+margin_bottom = 48.0
+mouse_filter = 2
+mouse_default_cursor_shape = 5
+script = ExtResource( 6 )
+
+[node name="Background" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -160.0
+margin_top = -32.0
+margin_right = 160.0
+texture = ExtResource( 8 )
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_top = 0.733
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = 20.0
+margin_right = -8.0
+margin_bottom = -4.0
+mouse_default_cursor_shape = 2
+
+[node name="ActionElements" type="HBoxContainer" parent="MarginContainer"]
+margin_right = 304.0
+margin_bottom = 24.0
+rect_pivot_offset = Vector2( 374, -82 )
+
+[node name="Info" type="VBoxContainer" parent="MarginContainer/ActionElements"]
+margin_bottom = 24.0
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/ActionElements/Info"]
+self_modulate = Color( 0.027451, 0.0196078, 0.156863, 1 )
+margin_top = 4.0
+margin_bottom = 10.0
+rect_pivot_offset = Vector2( 78, 7 )
+theme = ExtResource( 5 )
+
+[node name="Health" type="Label" parent="MarginContainer/ActionElements/Info"]
+self_modulate = Color( 0.027451, 0.0196078, 0.156863, 1 )
+margin_top = 14.0
+margin_bottom = 20.0
+rect_pivot_offset = Vector2( 78, 7 )
+theme = ExtResource( 5 )
+
+[node name="VSeparator" type="VSeparator" parent="MarginContainer/ActionElements"]
+margin_left = 4.0
+margin_right = 220.0
+margin_bottom = 24.0
+size_flags_horizontal = 3
+custom_styles/separator = SubResource( 1 )
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ActionElements"]
+margin_left = 224.0
+margin_right = 304.0
+margin_bottom = 24.0
+alignment = 1
+
+[node name="ActionsLabel" type="Label" parent="MarginContainer/ActionElements/VBoxContainer2"]
+visible = false
+self_modulate = Color( 0, 0, 0, 1 )
+margin_right = 60.0
+margin_bottom = 9.0
+rect_pivot_offset = Vector2( 78, 7 )
+theme = ExtResource( 5 )
+text = "Actions"
+
+[node name="Actions" type="HBoxContainer" parent="MarginContainer/ActionElements/VBoxContainer2"]
+margin_top = 4.0
+margin_right = 80.0
+margin_bottom = 20.0
+
+[node name="MoveButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+margin_right = 17.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 7 )
+texture_pressed = ExtResource( 16 )
+texture_hover = ExtResource( 9 )
+texture_disabled = ExtResource( 12 )
+
+[node name="AttackButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+margin_left = 21.0
+margin_right = 38.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 15 )
+texture_pressed = ExtResource( 4 )
+texture_hover = ExtResource( 2 )
+texture_disabled = ExtResource( 10 )
+
+[node name="WaitButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+margin_left = 42.0
+margin_right = 59.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 1 )
+texture_pressed = ExtResource( 14 )
+texture_hover = ExtResource( 11 )
+texture_disabled = ExtResource( 13 )
+
+[node name="SpecialButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+margin_left = 63.0
+margin_right = 80.0
+margin_bottom = 16.0
+texture_normal = ExtResource( 19 )
+texture_pressed = ExtResource( 18 )
+texture_hover = ExtResource( 17 )
+texture_disabled = ExtResource( 3 )
+
+[node name="Tweener" type="Tween" parent="."]
+
+[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton" to="." method="_on_MoveButton_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton" to="." method="_on_MoveButton_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton" to="." method="_on_AttackButton_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton" to="." method="_on_AttackButton_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton" to="." method="_on_WaitButton_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton" to="." method="_on_WaitButton_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton" to="." method="_on_SpecialButton_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton" to="." method="_on_SpecialButton_pressed"]

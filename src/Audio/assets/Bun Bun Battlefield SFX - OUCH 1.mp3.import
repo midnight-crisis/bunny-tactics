@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bun Bun Battlefield SFX - OUCH 1.mp3-c667dc835b6102f8fe5c65dc9abbd075.mp3str"
+
+[deps]
+
+source_file="res://Audio/assets/Bun Bun Battlefield SFX - OUCH 1.mp3"
+dest_files=[ "res://.import/Bun Bun Battlefield SFX - OUCH 1.mp3-c667dc835b6102f8fe5c65dc9abbd075.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

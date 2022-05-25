@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Bun Bun Battlefield SFX - FOOTSTEPS 1.mp3-9d07cb996e2c67f55ff0a22afe860436.mp3str"
+
+[deps]
+
+source_file="res://Audio/assets/Bun Bun Battlefield SFX - FOOTSTEPS 1.mp3"
+dest_files=[ "res://.import/Bun Bun Battlefield SFX - FOOTSTEPS 1.mp3-9d07cb996e2c67f55ff0a22afe860436.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0
