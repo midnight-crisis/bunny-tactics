@@ -110,3 +110,23 @@ func _on_audio_player_end(audio_player):
 	print("audio player finished")
 	audio_player.stop()
 	audio_player.queue_free()
+
+# ======================================
+# Utils 
+# ======================================
+
+func init_2d_array(a: Array, w: int, h: int, default_value = null) -> Array:
+	a = []
+	
+	for x in range(w):
+		a.append([])
+		for y in range(h):
+			a[x].append(default_value)
+			
+	return a
+
+func vec2_within_bounds(pos: Vector2, max_x, max_y):
+	return (pos.x >= 0
+		&& pos.x < max_x
+		&& pos.y >= 0
+		&& pos.y < max_y)
