@@ -66,8 +66,7 @@ func spawn_unit(unit_type: int, side: int = Side.ANY) -> bool:
 	return add_unit(unit_type, pos)
 
 func _instance_unit(unit_type: int) -> Unit:
-	# TODO
-	return null
+	return Global.UnitScene[unit_type].instance()
 
 func _clear_unit_position(pos: Vector2) -> void:
 	if (_is_in_bounds(pos)):
