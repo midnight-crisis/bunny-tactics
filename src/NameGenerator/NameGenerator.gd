@@ -29,43 +29,44 @@ var GoodNames = [
 	"Rachel"
 ]
 
-var BadNames = [
-	"Jerma",
-	"Grongle",
-	"Romble",
-	"Donkler",
-	"Meano",
-	"Swoobo",
-	"Ranglo",
-	"Spoompy",
+var BadNamePrefix = [
 	"Greg",
-	"Scammywag",
-	"Crinkler",
-	"Braelynn",
-	"Kaylynn",
-	"Ayedyen",
-	"Haeidyenn",
-	"Jaeiylen",
-	"Shewent",
-	"Marvin",
-	"Sr. Bum",
-	"Bubby Jr.",
-	"Ms. Ginny",
-	"Mr. Mambo",
-	"Graonkle",
-	"Uncle Jun",
-	"Auntie Jan",
-	"Michaelt",
-	"Kangawrong",
-	"Ebeneezy",
-	"Cant-ye",
-	"Jim Jam",
-	"Ding Dong",
-	"Jisjas"
+	"Honk",
+	"Ding",
+	"Jung",
+	"Jerm",
+	"Mr. A",
+	"Ms. E",
+	"Mx. O"
+]
+
+var BadNameInfix = [
+	"ler",
+	"dle",
+	"brow",
+	"hart",
+	"fin",
+	"wawa",
+	"bibi",
+	"joo",
+	"wee"
+]
+
+var BadNameSuffix = [
+	"",
+	"s",
+	"y",
+	"ly",
+	"ski",
+	"doo",
+	"ee"
 ]
 
 func generate_good_name():
 	return GoodNames[Global.rng.randi() % GoodNames.size()]
 	
 func generate_bad_name():
-	return BadNames[Global.rng.randi() % BadNames.size()]
+	var prefix = BadNamePrefix[Global.rng.randi() % BadNamePrefix.size()]
+	var infix = BadNameInfix[Global.rng.randi() % BadNameInfix.size()]
+	var suffix = BadNameSuffix[Global.rng.randi() % BadNameSuffix.size()]
+	return prefix + infix + suffix
