@@ -28,12 +28,18 @@ _global_script_classes=[ {
 "class": "Unit",
 "language": "GDScript",
 "path": "res://Unit/Unit.gd"
+}, {
+"base": "Node2D",
+"class": "Unit_old",
+"language": "GDScript",
+"path": "res://Unit/Unit.old.gd"
 } ]
 _global_script_class_icons={
 "AI": "",
 "Bunny": "",
 "Enemy": "",
-"Unit": ""
+"Unit": "",
+"Unit_old": ""
 }
 
 [application]

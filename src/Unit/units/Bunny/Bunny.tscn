@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://Unit/Unit.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Unit/Unit.old.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Unit/units/Bunny/Bunny.gd" type="Script" id=2]
 [ext_resource path="res://Unit/assets/Bunny/bunny.png" type="Texture" id=3]
 
