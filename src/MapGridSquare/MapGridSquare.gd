@@ -1,25 +1,68 @@
 extends Node2D
+class_name MapGridSquare
 
-signal square_clicked
+signal square_selected 
 
-onready var Square = $Square
 onready var HighlightSquare = $HighlightSquare
-onready var InteractionArea = $InteractionArea
+onready var MovementSquare = $MovementSquare
+onready var AttackSquare = $AttackSquare
+onready var SpecialSquare = $SpecialSquare
+onready var InteractArea = $InteractArea
 
-var for_tile = Vector2(-1, -1)
+var grid_position = Vector2(-1, -1)
 
-func _on_InteractionArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
-	if (event is InputEventMouseButton && event.pressed && Input.is_action_pressed("click")):
-		emit_signal("square_clicked", for_tile)
-		
-func highlight():
-	HighlightSquare.visible = true
+func _ready() -> void:
+	pass
 	
-func dehighlight():
+func init(pos: Vector2):
+	set_position(pos)
+	
+# ======================================
+# Position
+# ======================================
+
+func get_position() -> Vector2:
+	return grid_position
+
+func set_position(pos: Vector2) -> void:
+	grid_position = pos
+	
+# ======================================
+# Squares
+# ======================================
+
+func show_highlight_square() -> void:
+	HighlightSquare.visible = true
+
+func hide_highlight_square() -> void:
 	HighlightSquare.visible = false
 
-func _on_InteractionArea_mouse_entered() -> void:
-	Square.visible = true
+func show_square(square_type: int) -> void:
+	hide_squares()
+	
+	match(square_type):
+		Global.SquareHighlight.MOVE:
+			MovementSquare.visible = true
+		Global.SquareHighlight.ATTACK:
+			AttackSquare.visible = true
+		Global.SquareHighlight.SPECIAL:
+			SpecialSquare.visible = true
+	
+func hide_squares():
+	MovementSquare.visible = false
+	AttackSquare.visible = false
+	SpecialSquare.visible = false
+	
+# ======================================
+# InteractArea
+# ======================================
 
-func _on_InteractionArea_mouse_exited() -> void:
-	Square.visible = false
+func _on_InteractArea_mouse_entered() -> void:
+	show_highlight_square()
+
+func _on_InteractArea_mouse_exited() -> void:
+	hide_highlight_square()
+
+func _on_InteractArea_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
+	if (InputEventMouseButton && event.pressed):
+		emit_signal("square_selected", self)

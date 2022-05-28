@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Map/Map.gd" type="Script" id=1]
-[ext_resource path="res://MapGrid/MapGrid.tscn" type="PackedScene" id=3]
+[ext_resource path="res://MapGrid/MapGrid.old.tscn" type="PackedScene" id=3]
 [ext_resource path="res://TileSet/DefaultTileSet.tres" type="TileSet" id=4]
 [ext_resource path="res://MapTiles/MapTiles.tscn" type="PackedScene" id=5]
 

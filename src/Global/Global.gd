@@ -95,6 +95,14 @@ var Sfx = {
 	"ENDTURN": preload("res://Audio/assets/Bun_Bun_Battlefield_SFX_-_END_TURN_1.mp3")
 }
 
+enum SquareHighlight {
+	NONE = 0,
+	HILIGHT = 1,
+	MOVE = 101,
+	ATTACK = 201,
+	SPECIAL = 1001
+}
+
 func _ready() -> void:
 	rng.randomize()
 	
