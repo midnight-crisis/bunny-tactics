@@ -12,7 +12,7 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "AI",
 "language": "GDScript",
-"path": "res://AI/AI.gd"
+"path": "res://AI/AI.old.gd"
 }, {
 "base": "Unit",
 "class": "Bunny",

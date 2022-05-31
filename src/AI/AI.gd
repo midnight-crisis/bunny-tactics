@@ -1,135 +1,104 @@
 extends Node
-class_name AI
 
-signal attack
-signal move
-signal wait
+onready var Map = get_parent().MapManager # TODO: seems sketchy
 
-var unit = null
-var map = []
-var units = []
-var attack_target = null
-var move_target = null
+# ======================================
+# Control (Main)
+# ======================================
 
-onready var AttackTimer = $AttackTimer
-onready var WaitTimer = $WaitTimer
-onready var MoveTimer = $MoveTimer
+func control_units(units: Array):
+	for u in units:
+		control_units(u)
 
-func _ready() -> void:
-	print("Initializing AI...")
-	AttackTimer.connect("timeout", self, "_attack")
-	WaitTimer.connect("timeout", self, "_wait")
-	MoveTimer.connect("timeout", self, "_move")
+func control_unit(unit: Unit):
 	
-func control(unit_, map_, units_):
-	# Start
-	# Update active unit, current map, current unit placement
-	# Find any enemies in attack range
-		# If so, attack 
-	# Calculate accessible tiles
-	# Find the closest enemy within reachable tiles
-		# If enemy is found, set any accessible tile around it as move target
-		# If no enemy is found, set random accessible move target (bad)
-	# If still not attacked, find any enemies in attack range
-		# If so, attack 
-		# If not, wait (passive heal)
-	# End
-	
-	unit = unit_
-	map = map_
-	units = units_
-	attack_target = null
-	move_target = null
-	
-	print("Starting AI for " + String(unit.species))
-	
-	var attack_tiles = get_reachable_tiles(unit.tile_position, unit.attack_reach)
-	var move_tiles = get_reachable_tiles(unit.tile_position, unit.move_reach)
-	
-	attack_target = pick_attack_target(attack_tiles)
-	if (attack_target != null):
-		AttackTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
-		return
-		
-	attack_target = pick_attack_target(move_tiles)
-	if (attack_target):
-		move_target = pick_accessible_adjacent_tile(move_tiles, attack_target.tile_position)
-		if (move_target):
-			MoveTimer.start(Global.AI_MOVE_TIME)
-			AttackTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
-			return
+	# START
+	# From current location, find enemies in attack range
+		# If enemy(s) found, attack
+			# If multiple enemies, attack weakest enemy
+			# END
 			
-	else: # No unit in sight
-		if (move_tiles.size() > 0):
-			move_target = move_tiles[Global.rng.randi() % move_tiles.size()]
-			if (move_target): MoveTimer.start(Global.AI_MOVE_TIME)
-		WaitTimer.start(Global.AI_MOVE_TIME + Global.AI_ACTION_TIME)
+	# From current location, find reachable tiles in move range
+		# If enemy(s) found, find adjacent tile
+		# If adjacent tile found, move to that tile
+		# If enemy is in range of that adjacent tile (will probably be), attack 
+			# If multiple enemies, attack weakest enemy
+			# END
 	
-	print("Ending AI")
+	# Find most left/right-most tile ("extremest")
+		# If on right side (center inclusive), choose left-most
+		# If on left side (center exclusive), choose right-most
+	# Move to that left/right-most tile 
 	
-func pick_accessible_adjacent_tile(tiles, pos):
-	var targets = [
-		Vector2(pos.x, pos.y + 1),
-		Vector2(pos.x + 1, pos.y),
-		Vector2(pos.x, pos.y - 1),
-		Vector2(pos.x - 1, pos.y)
-	]
+	# From new location, find enemies in attack range
+		# If enemy(s) found, attack
+			# If multiple enemies, attack weakest enemy
+			# END
 	
-	for a in targets:
-		if (tiles.has(a)):
-			return a
+	# Wait to passive heal
+	# END
+	
+	var attackable_tiles = get_attackable_tiles(unit)
+	if (attackable_tiles != []):
+		var attackable_units = get_units_in_tiles(attackable_tiles)
+		if (attackable_units != []):
+			var weakest_unit = pick_weakest_unit(attackable_units)
+			if (weakest_unit != null):
+				# HURT UNIT
+				return
+	
+	var moveable_tiles = get_moveable_tiles(unit)
+	var attackable_units = get_units_in_tiles(moveable_tiles)
+	if (attackable_units != []):
+		var weakest_unit = pick_weakest_unit(attackable_units)
+		if (weakest_unit != null):
+			var adjacent_tile = get_reachable_adjacent_tile(unit, weakest_unit.grid_position)
+			if (adjacent_tile != null):
+				# MOVE TO ADJACENT TILE
+				# HURT UNIT
+				return
+	
+	var extremest_tile = pick_extremest_tile(unit.grid_position, moveable_tiles)
+	# MOVE UNIT
+	
+	attackable_tiles = get_attackable_tiles(unit)
+	if (attackable_tiles != []):
+		attackable_units = get_units_in_tiles(attackable_tiles)
+		if (attackable_units != []):
+			var weakest_unit = pick_weakest_unit(attackable_units)
+			if (weakest_unit != null):
+				# HURT UNIT
+				return
+				
+	# WAIT
+	pass
+	
+# ======================================
+# Tile 
+# ======================================
+	
+func get_moveable_tiles(unit: Unit) -> Array:
+	return get_reachable_tiles(unit, unit.move_reach)
+	
+func get_attackable_tiles(unit: Unit) -> Array:
+	return get_reachable_tiles(unit, unit.attack_reach)
+
+func get_reachable_tiles(unit: Unit, reach: int) -> Array:
+	return [null]
+	
+func get_units_in_tiles(grid_positions: Array) -> Array:
+	return []
+	
+func get_reachable_adjacent_tile(unit: Unit, pos: Vector2) -> Vector2:
+	return Vector2(-1, -1)
+
+func pick_extremest_tile(pos: Vector2, grid_positions: Array) -> Vector2:
+	return Vector2(-1, -1)
+	
+# ======================================
+# Unit 
+# ======================================
+	
+func pick_weakest_unit(units: Array) -> Unit:
 	return null
-	
-func pick_attack_target(tiles):
-	for t in tiles:
-		var u = units[t.x][t.y]
-		if (u != null && u.team != unit.team):
-			return u
-	return null
 
-func get_reachable_tiles(pos, reach):
-	var tiles = _calcTile(pos, reach)
-	
-	for i in range(0, tiles.size()):
-		for j in range(tiles.size() - 1, i):
-			if (tiles[i] == tiles[j]):
-				tiles.pop_at(j)
-	return tiles
-
-func _move():
-	emit_signal("move", unit, move_target)
-
-func _attack():
-	emit_signal("attack", unit, attack_target)
-
-func _wait():
-	emit_signal("wait", unit)
-
-func _calcTile(pos, reach):
-	if (reach == 0): return []
-	
-	var reachable = []
-	var targets = [
-		Vector2(pos.x, pos.y + 1),
-		Vector2(pos.x + 1, pos.y),
-		Vector2(pos.x, pos.y - 1),
-		Vector2(pos.x - 1, pos.y)
-	]
-	
-	# Add NESW if eligible
-	# Reiterate at NESW with 1 less reach
-	for t in targets:
-		if (_vIn(t)
-		&& (map[t.x][t.y] == Global.Tile.GROUND
-		|| (map[t.x][t.y] == Global.Tile.EMPTY && unit.can_traverse_holes)
-		|| (map[t.x][t.y] == Global.Tile.WATER && unit.can_traverse_water)
-		|| (map[t.x][t.y] == Global.Tile.FENCE && unit.can_traverse_fence))): # CHANGE THIS TO FENCE
-			reachable.append(t)
-			reachable.append_array(_calcTile(t, reach - 1))
-	
-	return reachable
-
-func _vIn(v):
-	if ((v.x >= 0 && v.x < Global.MAP_TILES_WIDTH) &&
-		(v.y >= 0 && v.y < Global.MAP_TILES_HEIGHT)): return true
-	return false
