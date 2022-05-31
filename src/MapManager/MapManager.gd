@@ -25,7 +25,7 @@ func get_tile(pos: Vector2) -> int:
 	return tiles[pos.x][pos.y]
 
 func set_tile(tile_type: int, pos: Vector2) -> bool:
-	if (_is_in_bounds(pos)):
+	if (is_in_bounds(pos)):
 		tiles[pos.x][pos.y] = tile_type
 		MapDisplay.render(tiles)
 		return true
@@ -40,11 +40,11 @@ func get_unit(pos: Vector2) -> Unit:
 	return units[pos.x][pos.y]
 
 func set_unit(unit: Unit, pos: Vector2) -> bool:
-	if (!unit || _is_in_bounds(pos)):
+	if (!unit || is_in_bounds(pos)):
 		return false
 		
 	var tile_type = get_tile(pos)
-	if (_is_traversable_by_unit(tile_type, unit)):
+	if (is_traversable_by_unit(tile_type, unit)):
 		_clear_unit_position(unit.tile_position)
 		unit.tile_position = pos
 		UnitManager.move_unit(unit, pos)
@@ -69,10 +69,10 @@ func _instance_unit(unit_type: int) -> Unit:
 	return Global.UnitScene[unit_type].instance()
 
 func _clear_unit_position(pos: Vector2) -> void:
-	if (_is_in_bounds(pos)):
+	if (is_in_bounds(pos)):
 		units[pos.x][pos.y] = null
 
-func _is_traversable_by_unit(tile_type: int, unit: Unit) -> bool:
+func is_traversable_by_unit(tile_type: int, unit: Unit) -> bool:
 	match(tile_type):
 		Global.Tile.GROUND:
 			return true
@@ -111,9 +111,9 @@ func _get_random_placeable_position(side = Side.ANY) -> Vector2:
 	return pos
 
 func _is_placable_position(pos: Vector2) -> bool:
-	return (_is_in_bounds(pos)
+	return (is_in_bounds(pos)
 		&& tiles[pos.x][pos.y] == Global.Tile.GROUND
 		&& units[pos.x][pos.y] == null)
 
-func _is_in_bounds(pos: Vector2) -> bool:
+func is_in_bounds(pos: Vector2) -> bool:
 	return Global.vec2_within_bounds(pos, Global.MAP_TILES_WIDTH, Global.MAP_TILES_HEIGHT)

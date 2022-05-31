@@ -17,6 +17,7 @@ const AI_ACTION_TIME = 1.0
 const SPAWN_ENEMY_BASE_AMOUNT = 5
 const UPGRADE_ENEMY_BASE_AMOUNT = 3
 const UPGRADE_HEAL_PERCENTAGE = 0.5
+const AI_DIRECTION_BIAS = 0.2
 
 var rng = RandomNumberGenerator.new()
 
