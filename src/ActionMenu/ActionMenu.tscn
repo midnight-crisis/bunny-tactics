@@ -23,85 +23,68 @@
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="ActionMenu" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_top = 48.0
-margin_bottom = 48.0
+margin_right = 320.0
+margin_bottom = 32.0
 mouse_filter = 2
 mouse_default_cursor_shape = 5
 script = ExtResource( 6 )
 
+[node name="Tweener" type="Tween" parent="."]
+
 [node name="Background" type="TextureRect" parent="."]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -160.0
-margin_top = -32.0
-margin_right = 160.0
+margin_right = 320.0
+margin_bottom = 32.0
 texture = ExtResource( 8 )
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-anchor_top = 0.733
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="Container" type="MarginContainer" parent="."]
 margin_left = 8.0
-margin_top = 20.0
-margin_right = -8.0
-margin_bottom = -4.0
+margin_top = 4.0
+margin_right = 312.0
+margin_bottom = 28.0
 mouse_default_cursor_shape = 2
 
-[node name="ActionElements" type="HBoxContainer" parent="MarginContainer"]
+[node name="Content" type="HBoxContainer" parent="Container"]
 margin_right = 304.0
 margin_bottom = 24.0
 rect_pivot_offset = Vector2( 374, -82 )
 
-[node name="Info" type="VBoxContainer" parent="MarginContainer/ActionElements"]
+[node name="Info" type="VBoxContainer" parent="Container/Content"]
 margin_bottom = 24.0
 alignment = 1
 
-[node name="Title" type="Label" parent="MarginContainer/ActionElements/Info"]
+[node name="Title" type="Label" parent="Container/Content/Info"]
 self_modulate = Color( 0.027451, 0.0196078, 0.156863, 1 )
 margin_top = 4.0
 margin_bottom = 10.0
 rect_pivot_offset = Vector2( 78, 7 )
 theme = ExtResource( 5 )
 
-[node name="Health" type="Label" parent="MarginContainer/ActionElements/Info"]
+[node name="Health" type="Label" parent="Container/Content/Info"]
 self_modulate = Color( 0.027451, 0.0196078, 0.156863, 1 )
 margin_top = 14.0
 margin_bottom = 20.0
 rect_pivot_offset = Vector2( 78, 7 )
 theme = ExtResource( 5 )
 
-[node name="VSeparator" type="VSeparator" parent="MarginContainer/ActionElements"]
+[node name="VSeparator" type="VSeparator" parent="Container/Content"]
 margin_left = 4.0
 margin_right = 220.0
 margin_bottom = 24.0
 size_flags_horizontal = 3
 custom_styles/separator = SubResource( 1 )
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/ActionElements"]
+[node name="Action" type="VBoxContainer" parent="Container/Content"]
 margin_left = 224.0
 margin_right = 304.0
 margin_bottom = 24.0
 alignment = 1
 
-[node name="ActionsLabel" type="Label" parent="MarginContainer/ActionElements/VBoxContainer2"]
-visible = false
-self_modulate = Color( 0, 0, 0, 1 )
-margin_right = 60.0
-margin_bottom = 9.0
-rect_pivot_offset = Vector2( 78, 7 )
-theme = ExtResource( 5 )
-text = "Actions"
-
-[node name="Actions" type="HBoxContainer" parent="MarginContainer/ActionElements/VBoxContainer2"]
+[node name="ActionButtons" type="HBoxContainer" parent="Container/Content/Action"]
 margin_top = 4.0
 margin_right = 80.0
 margin_bottom = 20.0
 
-[node name="MoveButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+[node name="MoveButton" type="TextureButton" parent="Container/Content/Action/ActionButtons"]
 margin_right = 17.0
 margin_bottom = 16.0
 texture_normal = ExtResource( 7 )
@@ -109,7 +92,7 @@ texture_pressed = ExtResource( 16 )
 texture_hover = ExtResource( 9 )
 texture_disabled = ExtResource( 12 )
 
-[node name="AttackButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+[node name="AttackButton" type="TextureButton" parent="Container/Content/Action/ActionButtons"]
 margin_left = 21.0
 margin_right = 38.0
 margin_bottom = 16.0
@@ -118,7 +101,7 @@ texture_pressed = ExtResource( 4 )
 texture_hover = ExtResource( 2 )
 texture_disabled = ExtResource( 10 )
 
-[node name="WaitButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+[node name="WaitButton" type="TextureButton" parent="Container/Content/Action/ActionButtons"]
 margin_left = 42.0
 margin_right = 59.0
 margin_bottom = 16.0
@@ -127,7 +110,7 @@ texture_pressed = ExtResource( 14 )
 texture_hover = ExtResource( 11 )
 texture_disabled = ExtResource( 13 )
 
-[node name="SpecialButton" type="TextureButton" parent="MarginContainer/ActionElements/VBoxContainer2/Actions"]
+[node name="SpecialButton" type="TextureButton" parent="Container/Content/Action/ActionButtons"]
 margin_left = 63.0
 margin_right = 80.0
 margin_bottom = 16.0
@@ -136,13 +119,7 @@ texture_pressed = ExtResource( 18 )
 texture_hover = ExtResource( 17 )
 texture_disabled = ExtResource( 3 )
 
-[node name="Tweener" type="Tween" parent="."]
-
-[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton" to="." method="_on_MoveButton_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton" to="." method="_on_MoveButton_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton" to="." method="_on_AttackButton_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton" to="." method="_on_AttackButton_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton" to="." method="_on_WaitButton_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton" to="." method="_on_WaitButton_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton" to="." method="_on_SpecialButton_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton" to="." method="_on_SpecialButton_pressed"]
+[connection signal="pressed" from="Container/Content/Action/ActionButtons/MoveButton" to="." method="_on_MoveButton_pressed"]
+[connection signal="pressed" from="Container/Content/Action/ActionButtons/AttackButton" to="." method="_on_AttackButton_pressed"]
+[connection signal="pressed" from="Container/Content/Action/ActionButtons/WaitButton" to="." method="_on_WaitButton_pressed"]
+[connection signal="pressed" from="Container/Content/Action/ActionButtons/SpecialButton" to="." method="_on_SpecialButton_pressed"]

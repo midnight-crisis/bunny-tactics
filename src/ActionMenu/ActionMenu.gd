@@ -2,162 +2,162 @@ extends Control
 
 signal action_selected
 
-onready var HealIcon = preload("res://ActionMenu/assets/heal-default.png")
-onready var BuildIcon = preload("res://ActionMenu/assets/hammer-default.png")
-onready var DigIcon = preload("res://ActionMenu/assets/dig-default.png")
-onready var FloodIcon = preload("res://ActionMenu/assets/bucket-default.png")
+onready var HealIcons = {
+	DEFAULT = preload("res://ActionMenu/assets/heal-default.png"),
+	HOVER = preload("res://ActionMenu/assets/heal-hover.png"),
+	PRESS = preload("res://ActionMenu/assets/heal-press.png"),
+	DISABLED = preload("res://ActionMenu/assets/heal-disable.png")
+}
+onready var BuildIcons = {
+	DEFAULT = preload("res://ActionMenu/assets/hammer-default.png"),
+	HOVER = preload("res://ActionMenu/assets/hammer-hover.png"),
+	PRESS = preload("res://ActionMenu/assets/hammer-press.png"),
+	DISABLED = preload("res://ActionMenu/assets/hammer-disable.png")
+}
+onready var DigIcons = {
+	DEFAULT = preload("res://ActionMenu/assets/dig-default.png"),
+	HOVER = preload("res://ActionMenu/assets/dig-hover.png"),
+	PRESS = preload("res://ActionMenu/assets/dig-press.png"),
+	DISABLED = preload("res://ActionMenu/assets/dig-disable.png")
+}
+onready var FloodIcons = {
+	DEFAULT = preload("res://ActionMenu/assets/bucket-default.png"),
+	HOVER = preload("res://ActionMenu/assets/bucket-hover.png"),
+	PRESS = preload("res://ActionMenu/assets/bucket-press.png"),
+	DISABLED = preload("res://ActionMenu/assets/bucket-disable.png")
+}
 
-onready var HealIconHover = preload("res://ActionMenu/assets/heal-hover.png")
-onready var BuildIconHover = preload("res://ActionMenu/assets/hammer-hover.png")
-onready var DigIconHover = preload("res://ActionMenu/assets/dig-hover.png")
-onready var FloodIconHover = preload("res://ActionMenu/assets/bucket-hover.png")
-
-onready var HealIconPress = preload("res://ActionMenu/assets/heal-press.png")
-onready var BuildIconPress = preload("res://ActionMenu/assets/hammer-press.png")
-onready var DigIconPress = preload("res://ActionMenu/assets/dig-press.png")
-onready var FloodIconPress = preload("res://ActionMenu/assets/bucket-press.png")
-
-onready var HealIconDisabled = preload("res://ActionMenu/assets/heal-disable.png")
-onready var BuildIconDisabled = preload("res://ActionMenu/assets/hammer-disable.png")
-onready var DigIconDisabled = preload("res://ActionMenu/assets/dig-disable.png")
-onready var FloodIconDisabled = preload("res://ActionMenu/assets/bucket-disable.png")
-
-onready var Title = $MarginContainer/ActionElements/Info/Title
-onready var Health = $MarginContainer/ActionElements/Info/Health
-onready var ActionElements = $MarginContainer/ActionElements
-onready var AttackButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/AttackButton
-onready var MoveButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/MoveButton
-onready var WaitButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/WaitButton
-onready var SpecialButton = $MarginContainer/ActionElements/VBoxContainer2/Actions/SpecialButton
-onready var ActionsContainer = $MarginContainer/ActionElements/VBoxContainer2
-onready var Actions = $MarginContainer/ActionElements/VBoxContainer2/Actions
 onready var Tweener = $Tweener
+onready var Title = $Container/Content/Info/Title
+onready var Health = $Container/Content/Info/Health
+onready var ActionButtons = $Container/Content/Action/ActionButtons
+onready var ActionButton = {
+	MOVE = $Container/Content/Action/ActionButtons/MoveButton,
+	ATTACK = $Container/Content/Action/ActionButtons/AttackButton,
+	WAIT = $Container/Content/Action/ActionButtons/WaitButton,
+	SPECIAL = $Container/Content/Action/ActionButtons/SpecialButton
+}
 
-var unit = null
+var current_unit = null # Recieve signal to change unit
+var current_team = null # Recieve signal to change team
 
 func _ready() -> void:
 	pass
 	
-func show():
-	Tweener.interpolate_property(self, "rect_position", Vector2(0,32), Vector2(0,0), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
-	Tweener.start()
-	print("showing action bar")
-	
-func hide():
-	unit = null
-	Tweener.interpolate_property(self, "rect_position", rect_position, Vector2(0,32), 1, Tween.TRANS_QUINT, Tween.EASE_OUT)
-	Tweener.start()
-	print("HIDING action bar")
-	
-func set_unit(unit_):
-	unit = unit_
-	set_info()
-	set_special_button()
-	set_button_disables()
+# ======================================
+# Hide/Disable 
+# ======================================
 
-func set_info():
-	if (unit):
-		show()
-		Title.text = unit.fullname + " the " + unit.job + " " + unit.species 
-		Health.text = "HP: " + String(unit.health) + "/" + String(unit.max_health)
-		
-		if (unit.player_controllable):
-			ActionsContainer.visible = true
-		else:
-			ActionsContainer.visible = false
-		
-func set_special_button():
+func show() -> void:
+	# TODO: Animation
+	self.visible = true
+
+func hide() -> void:
+	# TODO: Animation
+	self.visible = false
+
+func show_actions() -> void:
+	# TODO: Animation
+	ActionButtons.visible = true
+
+func hide_actions() -> void:
+	# TODO: Animation
+	ActionButtons.visible = false
+
+func show_special_button() -> void:
+	# TODO: Animation
+	ActionButtons.SPECIAL.visible = true
+
+func hide_special_button() -> void:
+	# TODO: Animation
+	ActionButtons.SPECIAL.visible = false
 	
-	if (unit): 	
-		SpecialButton.visible = true
-		if (unit.special_action == Global.ActionType.HEAL):
-			SpecialButton.texture_normal = HealIcon
-			SpecialButton.texture_hover = HealIconHover
-			SpecialButton.texture_pressed = HealIconPress
-			SpecialButton.texture_disabled = HealIconDisabled
-		elif (unit.special_action == Global.ActionType.BUILD):
-			SpecialButton.texture_normal = BuildIcon
-			SpecialButton.texture_hover = BuildIconHover
-			SpecialButton.texture_pressed = BuildIconPress
-			SpecialButton.texture_disabled = BuildIconDisabled
-		elif (unit.special_action == Global.ActionType.DIG):
-			SpecialButton.texture_normal = DigIcon
-			SpecialButton.texture_hover = DigIconHover
-			SpecialButton.texture_pressed = DigIconPress
-			SpecialButton.texture_disabled = DigIconDisabled
-		elif (unit.special_action == Global.ActionType.FLOOD):
-			SpecialButton.texture_normal = FloodIcon
-			SpecialButton.texture_hover = FloodIconHover
-			SpecialButton.texture_pressed = FloodIconPress
-			SpecialButton.texture_disabled = FloodIconDisabled
-		else:
-			SpecialButton.visible = false
+func enable_buttons() -> void:
+	ActionButtons.MOVE.disabled = false
+	ActionButtons.ATTACK.disabled = false
+	ActionButtons.WAIT.disabled = false
+	ActionButtons.SPECIAL.disabled = false
+
+func disable_move_buttons() -> void:
+	# TODO: Animation
+	ActionButtons.MOVE.disabled = true
+
+func disable_act_buttons() -> void:
+	# TODO: Animation
+	ActionButtons.ATTACK.disabled = true
+	ActionButtons.WAIT.disabled = true
+	ActionButtons.SPECIAL.disabled = true
+
+# ======================================
+# Update
+# ======================================
+
+func update_menu(unit: Unit) -> void:
+	update_info(unit)
+	update_buttons(unit)
+
+func update_info(unit: Unit) -> void:
+	Title.text = unit.first_name + " the " + unit.job + " " + unit.species
+	Health.text = "HP: " + String(unit.health) + "/" + String(unit.max_health)
+
+func update_buttons(unit: Unit) -> void:
+	if (unit.team == Global.Team.PLAYER && current_team == Global.Team.PLAYER):
+		show_actions()
+		enable_buttons()
+		if (unit.has_moved): disable_move_buttons()
+		if (unit.has_acted): disable_act_buttons()
+		update_special_button(unit)
 	else:
-		return
-		
-func set_button_disables():
-	MoveButton.disabled = false
-	AttackButton.disabled = false
-	WaitButton.disabled = false
-	SpecialButton.disabled = false
-	
-	if (unit):
-		if (unit.has_moved):
-			MoveButton.disabled = true
-		if (unit.has_acted):
-			AttackButton.disabled = true
-			WaitButton.disabled = true
-			SpecialButton.disabled = true
-		
-func _on_move_taken():
-	MoveButton.disabled = true
+		hide_actions()
 
-func _on_action_taken():
-	AttackButton.disabled = true
-	WaitButton.disabled = true
-	SpecialButton.disabled = true
+func update_special_button(unit: Unit) -> void: 
+	show_special_button()
 	
-func _on_turn_end():
-	MoveButton.disabled = false
-	AttackButton.disabled = false
-	MoveButton.disabled = false
-	SpecialButton.disabled = false
-	
-func hide_actions():
-	Actions.visible = false
-	
-func show_actions():
-	Actions.visible = true
+	match(unit.special_action):
+		Global.ActionType.BUILD:
+			_update_special_button_textures(BuildIcons)
+		Global.ActionType.DIG:
+			_update_special_button_textures(DigIcons)
+		Global.ActionType.FLOOD:
+			_update_special_button_textures(FloodIcons)
+		Global.ActionType.HEAL:
+			_update_special_button_textures(HealIcons)
+		_: 
+			hide_special_button()
 
-func _on_AttackButton_pressed() -> void:
-	emit_signal("action_selected", Global.ActionType.ATTACK)
-	print("Attacking")
-	Global.PlayAudio("CLICK")
+func _update_special_button_textures(icons) -> void:
+	ActionButtons.SPECIAL.texture_normal = icons.DEFAULT
+	ActionButtons.SPECIAL.texture_hover = icons.HOVER
+	ActionButtons.SPECIAL.texture_pressed = icons.PRESS
+	ActionButtons.SPECIAL.texture_disabled = icons.DISABLED
+
+# ======================================
+# Team/Unit
+# ======================================
+
+func _on_unit_change(unit: Unit) -> void:
+	current_unit = unit
+	update_menu(unit)
+
+func _on_team_change(team: int) -> void:
+	current_team = team
+	update_menu(current_unit) # ?
+
+# ======================================
+# Action Button Pressed
+# ======================================
+
+func _on_action_button_pressed(unit: Unit, action_type: int):
+	emit_signal("action_selected", unit, action_type)
 
 func _on_MoveButton_pressed() -> void:
-	emit_signal("action_selected", Global.ActionType.MOVE)
-	print("Moving")
-	Global.PlayAudio("CLICK")
+	_on_action_button_pressed(current_unit, Global.ActionType.MOVE)
+
+func _on_AttackButton_pressed() -> void:
+	_on_action_button_pressed(current_unit, Global.ActionType.ATTACK)
 
 func _on_WaitButton_pressed() -> void:
-	emit_signal("action_selected", Global.ActionType.WAIT)
-	print("Waiting")
-	Global.PlayAudio("CLICK")
+	_on_action_button_pressed(current_unit, Global.ActionType.WAIT)
 
 func _on_SpecialButton_pressed() -> void:
-	emit_signal("action_selected", unit.special_action)
-	print("Using Special")
-	Global.PlayAudio("CLICK")
-
-func _on_AttackButton_mouse_entered() -> void:
-	Global.PlayAudio("HOVER")
-
-func _on_MoveButton_mouse_entered() -> void:
-	Global.PlayAudio("HOVER")
-
-func _on_WaitButton_mouse_entered() -> void:
-	Global.PlayAudio("HOVER")
-
-func _on_SpecialButton_mouse_entered() -> void:
-	Global.PlayAudio("HOVER")
-
+	_on_action_button_pressed(current_unit, current_unit.special_action)
