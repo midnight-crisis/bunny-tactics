@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Theme/DefaultTheme.tres" type="Theme" id=1]
-[ext_resource path="res://InfoMenu/InfoMenu.gd" type="Script" id=2]
+[ext_resource path="res://InfoMenu/InfoMenu.old.gd" type="Script" id=2]
 
 [node name="InfoMenu" type="Control"]
 anchor_right = 1.0
@@ -9,18 +9,23 @@ anchor_bottom = 1.0
 margin_bottom = -160.0
 script = ExtResource( 2 )
 
-[node name="Container" type="MarginContainer" parent="."]
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+margin_right = 320.0
+margin_bottom = 32.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
 margin_left = 8.0
 margin_top = 4.0
 margin_right = 312.0
 margin_bottom = 18.0
 
-[node name="Content" type="HBoxContainer" parent="Container"]
+[node name="InfoElements" type="HBoxContainer" parent="MarginContainer"]
 margin_right = 304.0
 margin_bottom = 17.0
 alignment = 1
 
-[node name="Turn" type="Label" parent="Container/Content"]
+[node name="Turn" type="Label" parent="MarginContainer/InfoElements"]
 margin_top = 5.0
 margin_right = 51.0
 margin_bottom = 11.0
@@ -28,7 +33,7 @@ size_flags_horizontal = 2
 theme = ExtResource( 1 )
 text = "Turn: Yours"
 
-[node name="EndTurnButton" type="Button" parent="Container/Content"]
+[node name="EndTurnButton" type="Button" parent="MarginContainer/InfoElements"]
 margin_left = 122.0
 margin_right = 181.0
 margin_bottom = 17.0
@@ -36,7 +41,7 @@ size_flags_horizontal = 6
 theme = ExtResource( 1 )
 text = " End Turn "
 
-[node name="Wave" type="Label" parent="Container/Content"]
+[node name="Wave" type="Label" parent="MarginContainer/InfoElements"]
 margin_left = 268.0
 margin_top = 5.0
 margin_right = 304.0
@@ -45,4 +50,4 @@ size_flags_horizontal = 10
 theme = ExtResource( 1 )
 text = "Wave 99"
 
-[connection signal="pressed" from="Container/Content/EndTurnButton" to="." method="_on_EndTurnButton_pressed"]
+[connection signal="pressed" from="MarginContainer/InfoElements/EndTurnButton" to="." method="_on_EndTurnButton_pressed"]
