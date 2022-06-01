@@ -25,16 +25,110 @@ anchor_bottom = 1.0
 mouse_filter = 1
 script = ExtResource( 1 )
 
-[node name="Reward" type="Control" parent="."]
+[node name="RewardSelection" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Center" type="CenterContainer" parent="RewardSelection"]
+margin_right = 320.0
+margin_bottom = 180.0
+
+[node name="Panel" type="PanelContainer" parent="RewardSelection/Center"]
+margin_left = 87.0
+margin_top = 36.0
+margin_right = 233.0
+margin_bottom = 144.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 1 )
+
+[node name="Container" type="MarginContainer" parent="RewardSelection/Center/Panel"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 137.0
+margin_bottom = 99.0
+
+[node name="Content" type="VBoxContainer" parent="RewardSelection/Center/Panel/Container"]
+margin_right = 128.0
+margin_bottom = 90.0
+
+[node name="HSeparator3" type="HSeparator" parent="RewardSelection/Center/Panel/Container/Content"]
+margin_right = 128.0
+margin_bottom = 4.0
+custom_styles/separator = SubResource( 2 )
+
+[node name="Title" type="Label" parent="RewardSelection/Center/Panel/Container/Content"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_top = 8.0
+margin_right = 128.0
+margin_bottom = 14.0
+theme = ExtResource( 2 )
+text = "Choose a reward:"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="RewardSelection/Center/Panel/Container/Content"]
+margin_top = 18.0
+margin_right = 128.0
+margin_bottom = 22.0
+custom_styles/separator = SubResource( 2 )
+
+[node name="Rewards" type="HBoxContainer" parent="RewardSelection/Center/Panel/Container/Content"]
+margin_top = 26.0
+margin_right = 128.0
+margin_bottom = 46.0
+alignment = 1
+
+[node name="Reward1Button" type="TextureButton" parent="RewardSelection/Center/Panel/Container/Content/Rewards"]
+margin_left = 41.0
+margin_right = 62.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 4 )
+texture_hover = ExtResource( 6 )
+
+[node name="Reward1Icon" type="TextureRect" parent="RewardSelection/Center/Panel/Container/Content/Rewards/Reward1Button"]
+margin_right = 21.0
+margin_bottom = 20.0
+texture = ExtResource( 5 )
+
+[node name="Reward2Button" type="TextureButton" parent="RewardSelection/Center/Panel/Container/Content/Rewards"]
+margin_left = 66.0
+margin_right = 87.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 4 )
+texture_hover = ExtResource( 6 )
+
+[node name="Reward2Icon" type="TextureRect" parent="RewardSelection/Center/Panel/Container/Content/Rewards/Reward2Button"]
+margin_right = 21.0
+margin_bottom = 20.0
+texture = ExtResource( 5 )
+
+[node name="HSeparator2" type="HSeparator" parent="RewardSelection/Center/Panel/Container/Content"]
+margin_top = 50.0
+margin_right = 128.0
+margin_bottom = 54.0
+custom_styles/separator = SubResource( 2 )
+
+[node name="Description" type="Label" parent="RewardSelection/Center/Panel/Container/Content"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_top = 58.0
+margin_right = 128.0
+margin_bottom = 90.0
+rect_min_size = Vector2( 128, 32 )
+theme = ExtResource( 2 )
+text = "Choose one of the rewards above. Hover over them to see a description."
+align = 1
+autowrap = true
+
+[node name="UnitSelection" type="Control" parent="."]
 visible = false
 margin_right = 40.0
 margin_bottom = 40.0
 
-[node name="CenterContainer" type="CenterContainer" parent="Reward"]
+[node name="Center" type="CenterContainer" parent="UnitSelection"]
 margin_right = 320.0
 margin_bottom = 180.0
 
-[node name="PanelContainer" type="PanelContainer" parent="Reward/CenterContainer"]
+[node name="Panel" type="PanelContainer" parent="UnitSelection/Center"]
 margin_left = 151.0
 margin_top = 81.0
 margin_right = 169.0
@@ -43,106 +137,32 @@ size_flags_horizontal = 2
 size_flags_vertical = 2
 custom_styles/panel = SubResource( 1 )
 
-[node name="MarginContainer" type="MarginContainer" parent="Reward/CenterContainer/PanelContainer"]
+[node name="Container" type="MarginContainer" parent="UnitSelection/Center/Panel"]
 margin_left = 9.0
 margin_top = 9.0
-margin_right = 85.0
-margin_bottom = 47.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Reward/CenterContainer/PanelContainer/MarginContainer"]
-margin_right = 76.0
-margin_bottom = 38.0
-
-[node name="Label" type="Label" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-self_modulate = Color( 0, 0, 0, 1 )
-margin_right = 76.0
-margin_bottom = 6.0
-theme = ExtResource( 2 )
-text = "Choose a Reward"
-align = 1
-
-[node name="HSeparator" type="HSeparator" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-margin_top = 10.0
-margin_right = 76.0
-margin_bottom = 14.0
-custom_styles/separator = SubResource( 2 )
-
-[node name="HBoxContainer" type="HBoxContainer" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
-margin_top = 18.0
-margin_right = 76.0
-margin_bottom = 38.0
-alignment = 1
-
-[node name="UpgradeButton1" type="TextureButton" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 15.0
-margin_right = 36.0
-margin_bottom = 20.0
-texture_normal = ExtResource( 4 )
-texture_hover = ExtResource( 6 )
-
-[node name="UpgradeSprite1" type="TextureRect" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton1"]
-margin_right = 21.0
-margin_bottom = 20.0
-texture = ExtResource( 5 )
-
-[node name="UpgradeButton2" type="TextureButton" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
-margin_left = 40.0
-margin_right = 61.0
-margin_bottom = 20.0
-texture_normal = ExtResource( 4 )
-texture_hover = ExtResource( 6 )
-
-[node name="UpgradeSprite2" type="TextureRect" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton2"]
-margin_right = 21.0
-margin_bottom = 20.0
-texture = ExtResource( 5 )
-
-[node name="Unit" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
-
-[node name="CenterContainer2" type="CenterContainer" parent="Unit"]
-margin_right = 320.0
-margin_bottom = 180.0
-
-[node name="PanelContainer" type="PanelContainer" parent="Unit/CenterContainer2"]
-margin_left = 124.0
-margin_top = 72.0
-margin_right = 195.0
-margin_bottom = 108.0
-size_flags_horizontal = 2
-size_flags_vertical = 2
-custom_styles/panel = SubResource( 1 )
-
-[node name="MarginContainer" type="MarginContainer" parent="Unit/CenterContainer2/PanelContainer"]
-margin_left = 9.0
-margin_top = 9.0
-margin_right = 62.0
+margin_right = 190.0
 margin_bottom = 27.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Unit/CenterContainer2/PanelContainer/MarginContainer"]
-margin_right = 53.0
+[node name="Content" type="VBoxContainer" parent="UnitSelection/Center/Panel/Container"]
+margin_right = 181.0
 margin_bottom = 18.0
 
-[node name="Label" type="Label" parent="Unit/CenterContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="Title" type="Label" parent="UnitSelection/Center/Panel/Container/Content"]
 self_modulate = Color( 0, 0, 0, 1 )
-margin_right = 53.0
+margin_right = 181.0
 margin_bottom = 6.0
 theme = ExtResource( 2 )
-text = "Choose Unit"
+text = "Choose which unit will get the upgrade:"
 align = 1
 
-[node name="HSeparator" type="HSeparator" parent="Unit/CenterContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="UnitSelection/Center/Panel/Container/Content"]
 margin_top = 10.0
-margin_right = 53.0
+margin_right = 181.0
 margin_bottom = 14.0
 custom_styles/separator = SubResource( 2 )
 
-[node name="GridContainer" type="GridContainer" parent="Unit/CenterContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+[node name="UnitList" type="GridContainer" parent="UnitSelection/Center/Panel/Container/Content"]
 margin_top = 18.0
-margin_right = 53.0
+margin_right = 181.0
 margin_bottom = 18.0
 columns = 2
-
-[connection signal="pressed" from="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton1" to="." method="_on_upgrade_1_selected"]
-[connection signal="pressed" from="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton2" to="." method="_on_upgrade_2_selected"]

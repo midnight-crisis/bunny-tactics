@@ -1,0 +1,148 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Theme/DefaultTheme.tres" type="Theme" id=1]
+[ext_resource path="res://UpgradeMenu/assets/attack-up.png" type="Texture" id=2]
+[ext_resource path="res://UpgradeMenu/UpgradeMenu.old.gd" type="Script" id=3]
+[ext_resource path="res://UpgradeMenu/assets/power-up-button-default.png" type="Texture" id=4]
+[ext_resource path="res://UpgradeMenu/assets/power-up-menu.png" type="Texture" id=5]
+[ext_resource path="res://UpgradeMenu/assets/power-up-button-hover.png" type="Texture" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 100, 69 )
+margin_left = 9.0
+margin_right = 9.0
+margin_top = 9.0
+margin_bottom = 9.0
+axis_stretch_horizontal = 2
+axis_stretch_vertical = 2
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="UpgradeMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+script = ExtResource( 3 )
+
+[node name="Reward" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="CenterContainer" type="CenterContainer" parent="Reward"]
+margin_right = 320.0
+margin_bottom = 180.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Reward/CenterContainer"]
+margin_left = 151.0
+margin_top = 81.0
+margin_right = 169.0
+margin_bottom = 99.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Reward/CenterContainer/PanelContainer"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 85.0
+margin_bottom = 47.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Reward/CenterContainer/PanelContainer/MarginContainer"]
+margin_right = 76.0
+margin_bottom = 38.0
+
+[node name="Label" type="Label" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_right = 76.0
+margin_bottom = 6.0
+theme = ExtResource( 1 )
+text = "Choose a Reward"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 10.0
+margin_right = 76.0
+margin_bottom = 14.0
+custom_styles/separator = SubResource( 2 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 76.0
+margin_bottom = 38.0
+alignment = 1
+
+[node name="UpgradeButton1" type="TextureButton" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 15.0
+margin_right = 36.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 4 )
+texture_hover = ExtResource( 6 )
+
+[node name="UpgradeSprite1" type="TextureRect" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton1"]
+margin_right = 21.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+
+[node name="UpgradeButton2" type="TextureButton" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer"]
+margin_left = 40.0
+margin_right = 61.0
+margin_bottom = 20.0
+texture_normal = ExtResource( 4 )
+texture_hover = ExtResource( 6 )
+
+[node name="UpgradeSprite2" type="TextureRect" parent="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton2"]
+margin_right = 21.0
+margin_bottom = 20.0
+texture = ExtResource( 2 )
+
+[node name="Unit" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="CenterContainer2" type="CenterContainer" parent="Unit"]
+margin_right = 320.0
+margin_bottom = 180.0
+
+[node name="PanelContainer" type="PanelContainer" parent="Unit/CenterContainer2"]
+margin_left = 124.0
+margin_top = 72.0
+margin_right = 195.0
+margin_bottom = 108.0
+size_flags_horizontal = 2
+size_flags_vertical = 2
+custom_styles/panel = SubResource( 1 )
+
+[node name="MarginContainer" type="MarginContainer" parent="Unit/CenterContainer2/PanelContainer"]
+margin_left = 9.0
+margin_top = 9.0
+margin_right = 62.0
+margin_bottom = 27.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Unit/CenterContainer2/PanelContainer/MarginContainer"]
+margin_right = 53.0
+margin_bottom = 18.0
+
+[node name="Label" type="Label" parent="Unit/CenterContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+self_modulate = Color( 0, 0, 0, 1 )
+margin_right = 53.0
+margin_bottom = 6.0
+theme = ExtResource( 1 )
+text = "Choose Unit"
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="Unit/CenterContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 10.0
+margin_right = 53.0
+margin_bottom = 14.0
+custom_styles/separator = SubResource( 2 )
+
+[node name="GridContainer" type="GridContainer" parent="Unit/CenterContainer2/PanelContainer/MarginContainer/VBoxContainer"]
+margin_top = 18.0
+margin_right = 53.0
+margin_bottom = 18.0
+columns = 2
+
+[connection signal="pressed" from="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton1" to="." method="_on_upgrade_1_selected"]
+[connection signal="pressed" from="Reward/CenterContainer/PanelContainer/MarginContainer/VBoxContainer/HBoxContainer/UpgradeButton2" to="." method="_on_upgrade_2_selected"]
